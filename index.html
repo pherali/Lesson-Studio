@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f8fa" />
+  <meta name="description" content="Your tutoring lessons, weekly timetable, and earnings in one place." />
+  <title>Lesson Studio — Flexible weekly organiser</title>
+  <style>
+    :root{color-scheme:light;--bg:#f6f7f9;--paper:#fff;--ink:#16191f;--muted:#77808d;--line:#e9ebef;--blue:#285ce6;--blue-light:#eff4ff;--green:#16845f;--green-light:#eaf8f1;--orange:#bf7b22;--orange-light:#fff6e8;--shadow:0 3px 18px rgba(21,30,47,.035);--radius:20px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:14px;-webkit-font-smoothing:antialiased}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9bbaff;outline-offset:2px}button:disabled{opacity:.45;cursor:not-allowed}.icon{width:19px;height:19px;display:inline-block;flex:none;vertical-align:middle;stroke:currentColor;fill:none;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}.icon.small{width:16px;height:16px}.icon.tiny{width:14px;height:14px}.app{min-height:100vh;display:flex}.sidebar{width:252px;background:#fff;border-right:1px solid var(--line);min-height:100vh;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:30px 16px 20px;flex-shrink:0;z-index:6}.brand{display:flex;align-items:center;gap:11px;padding:3px 12px 35px}.brand-mark{width:35px;height:35px;background:#1e293b;color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center}.brand-mark .icon{width:21px;height:21px}.brand-text{font-weight:750;letter-spacing:-.9px;font-size:19px}.brand-sub{font-size:11px;color:var(--muted);letter-spacing:.2px;margin-top:1px}.nav-label{padding:0 15px;margin:4px 0 9px;color:#a0a6b0;font-size:10px;font-weight:750;letter-spacing:1.4px;text-transform:uppercase}.nav-btn{border:0;background:transparent;color:#707884;display:flex;align-items:center;gap:13px;border-radius:12px;width:100%;padding:13px 15px;text-align:left;font-weight:600;font-size:13px;margin:2px 0;transition:.15s}.nav-btn:hover{background:#f6f8fb;color:#232b38}.nav-btn.active{background:#eef3ff;color:#2457d6}.nav-btn.active .icon{stroke-width:2.3}.nav-spacer{flex:1}.sidebar-foot{border-top:1px solid var(--line);padding:19px 12px 3px}.privacy-icon{display:flex;gap:8px;color:#647182;font-size:12px;align-items:center}.privacy-dot{width:7px;height:7px;background:#27af84;border-radius:99px;box-shadow:0 0 0 4px #dff8ed}.side-foot-note{font-size:11px;line-height:1.55;color:#a2a9b3;margin-top:11px}.main{flex:1;min-width:0;max-width:1620px;margin:auto;padding:43px clamp(22px,4.6vw,78px) 80px}.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:31px}.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:760;color:#8c94a0;text-transform:uppercase;margin:0 0 10px}.page-title{margin:0;font-size:clamp(30px,3.5vw,42px);letter-spacing:-1.8px;line-height:1.12;font-weight:730}.page-subtitle{font-size:14px;color:#8b94a0;margin:11px 0 0;line-height:1.5}.top-actions{display:flex;align-items:center;gap:11px;padding-top:7px;flex-wrap:wrap;justify-content:flex-end}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:white;color:#333b48;border-radius:11px;padding:11px 16px;font-size:12px;font-weight:680;min-height:40px;transition:.16s;white-space:nowrap}.btn:hover{background:#f7f9fc;border-color:#dadfe8}.btn.primary{background:#1b2432;border-color:#1b2432;color:white;box-shadow:0 4px 10px rgba(15,23,42,.09)}.btn.primary:hover{background:#344254}.btn.ghost{border-color:transparent;background:transparent}.btn.danger{color:#ca4d4d}.btn.blue{color:#2158d7;background:#edf3ff;border-color:#edf3ff}.month-picker{display:flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:11px;height:40px;box-shadow:var(--shadow)}.month-picker button{width:33px;height:37px;display:flex;align-items:center;justify-content:center;border:0;background:transparent;color:#6a7382}.month-picker button:hover{color:#1c4acc}.month-picker strong{font-size:12px;min-width:115px;text-align:center;font-weight:690;color:#344052}.card{background:#fff;border:1px solid #ebedf1;border-radius:var(--radius);box-shadow:var(--shadow)}.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}.metric{padding:22px 23px 20px;min-height:154px}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.metric-label{font-size:12px;color:#7d8794;font-weight:640}.metric-ico{display:flex;justify-content:center;align-items:center;width:31px;height:31px;border-radius:10px;background:#f2f4f8;color:#708094}.metric-ico.green{color:var(--green);background:var(--green-light)}.metric-ico.blue{color:var(--blue);background:var(--blue-light)}.metric-number{font-size:clamp(26px,2.8vw,36px);letter-spacing:-1.65px;font-weight:760;line-height:1.2;margin:21px 0 9px;font-variant-numeric:tabular-nums}.metric-meta{font-size:11px;color:#99a1ac}.metric-meta b{color:#5c6979;font-weight:650}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:32px 0 16px}.section-heading h2{margin:0;font-size:18px;letter-spacing:-.55px;font-weight:730}.section-heading p{margin:5px 0 0;color:#9099a4;font-size:12px}.link-btn{font-size:12px;border:0;background:transparent;color:#3467de;font-weight:700;display:flex;align-items:center;gap:3px;padding:7px}.link-btn:hover{text-decoration:underline}.split{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(290px,1fr);gap:18px;margin-bottom:24px}.insight-card{padding:25px 26px}.chart-wrap{height:186px;display:flex;align-items:end;gap:13px;padding:10px 0 0;margin-top:20px;border-bottom:1px solid #e7eaf0}.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0;height:100%;position:relative}.chart-bar-wrap{height:100%;width:100%;max-width:49px;display:flex;flex-direction:column;justify-content:flex-end;gap:0}.chart-future{background:#e5ecff;border-radius:7px 7px 0 0;min-height:0}.chart-earned{background:#3868eb;border-radius:5px 5px 0 0;min-height:0}.chart-total{height:100%;display:flex;flex-direction:column;justify-content:flex-end;width:100%}.chart-col.current .chart-earned{background:#1f4dd9}.chart-col.current .chart-future{background:#bfd0ff}.chart-labels{display:flex;gap:13px;margin:9px 0 2px}.chart-labels span{flex:1;min-width:0;text-align:center;color:#9099a4;font-size:10px}.legend{display:flex;gap:17px;margin-top:23px;color:#818b98;font-size:11px}.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px;background:#3868eb}.legend i.pale{background:#d8e4ff}.student-row{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid #f0f1f4}.student-row:last-child{border-bottom:0}.avatar{display:inline-flex;align-items:center;justify-content:center;width:37px;height:37px;border-radius:12px;font-weight:750;font-size:14px;flex:none}.student-info{flex:1;min-width:0}.student-name{font-size:13px;font-weight:720}.student-sub{font-size:11px;color:#9aa2ac;margin-top:4px}.student-money{text-align:right;font-size:13px;font-weight:750;font-variant-numeric:tabular-nums}.student-money span{font-size:10px;display:block;margin-top:5px;color:#9aa2ac;font-weight:500}.progress-line{height:7px;background:#edf0f4;border-radius:8px;overflow:hidden;margin-top:15px}.progress-line>div{height:100%;background:linear-gradient(90deg,#416cec,#2454d8);border-radius:8px}.progress-text{font-size:11px;color:#8d96a1;display:flex;justify-content:space-between;margin-top:10px}.lesson-panel{overflow:hidden}.lesson-toolbar{padding:20px 23px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #eef0f3;flex-wrap:wrap}.toolbar-title{font-size:15px;font-weight:735;letter-spacing:-.3px}.toolbar-sub{font-size:11px;color:#9ba3ad;margin-top:5px}.toolbar-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.pill-tabs{background:#f3f5f8;border:1px solid #eef0f4;display:flex;gap:3px;border-radius:10px;padding:3px}.pill-tabs button{background:transparent;border:0;border-radius:7px;padding:7px 12px;font-size:11px;color:#7c8694;font-weight:670}.pill-tabs button.sel{background:white;color:#2d3a4f;box-shadow:0 1px 4px rgba(0,0,0,.07)}.week-header{background:#fafbfc;padding:13px 23px;color:#677383;font-size:11px;font-weight:750;letter-spacing:.1px;border-top:1px solid #eef0f3;border-bottom:1px solid #eef0f3;display:flex;align-items:center;justify-content:space-between}.week-header:first-child{border-top:0}.week-header small{font-weight:550;color:#a4acb6;font-size:10px}.lesson-row{display:grid;grid-template-columns:30px minmax(115px,1.1fr) minmax(130px,1.25fr) 78px 76px 32px;gap:11px;align-items:center;padding:16px 22px;border-bottom:1px solid #f0f1f4;min-height:73px}.lesson-row:last-child{border-bottom:0}.check-btn{border:1.5px solid #d5dae2;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;color:transparent;background:#fff;transition:.15s}.check-btn:hover{border-color:#587aec;background:#f2f5ff}.check-btn.checked{color:#fff;background:#22946f;border-color:#22946f}.check-btn .icon{width:14px;height:14px;stroke-width:3}.who{display:flex;align-items:center;gap:9px;min-width:0}.who .avatar{width:33px;height:33px;border-radius:10px;font-size:12px}.who .student-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.date-main{font-size:12px;font-weight:670;color:#3d4857}.date-sub,.cell-sub{font-size:11px;color:#a1aab5;margin-top:4px}.money{text-align:right;font-weight:725;font-size:12px}.hours{text-align:right;color:#697583;font-size:12px;font-weight:600}.more-btn{border:0;background:transparent;color:#a5acb7;width:30px;height:30px;border-radius:8px}.more-btn:hover{background:#f1f4fa;color:#455064}.status-tag{display:block;margin-top:4px;font-size:10px;color:var(--green);font-weight:650}.status-tag.planned{color:#96a0ad}.status-tag.overdue{color:#c88431}.empty{padding:70px 25px;text-align:center}.empty .empty-icon{width:54px;height:54px;background:#f1f4ff;color:#3964d9;display:grid;place-items:center;border-radius:17px;margin:0 auto 14px}.empty h3{font-size:17px;letter-spacing:-.4px;margin:0 0 9px}.empty p{font-size:12px;color:#8994a3;margin:0 auto 18px;max-width:320px;line-height:1.6}.search-input{display:flex;align-items:center;gap:9px;padding:0 12px;border:1px solid #e6e9ee;background:#fff;border-radius:10px;height:39px;color:#9ba4b0}.search-input input{border:0;outline:0;max-width:160px;min-width:85px;color:#263143;background:transparent;font-size:12px}.search-input input:focus{outline:0}.filter-select{border:1px solid #e6e9ee;border-radius:10px;background:#fff;padding:10px 12px;font-size:12px;color:#495468;height:39px}.table-footer{padding:13px 23px;font-size:11px;color:#a0a9b3;display:flex;justify-content:space-between;gap:8px;border-top:1px solid #f0f1f4}.calendar{padding:21px}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}.day-head{text-align:center;color:#929aa5;font-size:11px;font-weight:650;padding:0 0 10px}.day-box{min-height:112px;border:1px solid #ebedf1;border-radius:12px;padding:9px 8px;background:white;min-width:0;overflow:hidden}.day-box.muted-day{background:#fafbfc;opacity:.5}.day-box.today{border-color:#86a6ff;box-shadow:inset 0 0 0 1px #86a6ff}.day-number{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:11px;font-weight:680;color:#687485}.day-box.today .day-number{color:#245cdb}.cal-lesson{font-size:10px;padding:5px 6px;margin:3px 0;background:#eff3fd;color:#3362c9;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;display:block;border:0;width:100%;text-align:left}.cal-lesson.done{background:#e5f6ee;color:#147654}.cal-more{font-size:10px;color:#a0a9b5;padding:3px}.day-plus{display:inline-flex;align-items:center;justify-content:center;color:#adb5c1;border:0;background:transparent;width:20px;height:20px;border-radius:6px}.day-plus:hover{background:#edf3ff;color:#3763d2}.student-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.student-card{padding:24px;min-height:195px}.student-card-top{display:flex;justify-content:space-between;align-items:flex-start}.student-card .avatar{width:52px;height:52px;border-radius:16px;font-size:19px}.student-card h3{font-size:18px;letter-spacing:-.5px;margin:21px 0 4px}.student-card p{color:#97a1ae;font-size:12px;margin:0}.student-card-foot{border-top:1px solid #eff0f3;display:flex;justify-content:space-between;align-items:center;margin-top:21px;padding-top:17px;font-size:12px;color:#87919d}.student-card-foot b{color:#273242;font-size:15px}.tag{background:#f2f5f9;border-radius:99px;color:#718093;padding:5px 8px;font-size:10px;font-weight:650}.tag.archive{background:#fff4e5;color:#aa7b3e}.student-stat-row{display:flex;justify-content:space-between;border-bottom:1px solid #eef0f3;padding:16px 0;color:#728091;font-size:13px}.student-stat-row:last-child{border:0}.student-stat-row b{color:#1f2c3d}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.settings-card{padding:26px}.settings-card h3{font-size:16px;margin:0 0 7px;letter-spacing:-.4px}.settings-card p{color:#8e99a6;font-size:12px;line-height:1.65;margin:0 0 22px}.field{display:flex;flex-direction:column;gap:8px}.field label{font-size:12px;font-weight:690;color:#505d6e}.field input,.field select,.field textarea{width:100%;border-radius:10px;border:1px solid #e1e5eb;background:white;padding:12px 13px;color:#283445;outline:none;font-size:13px;min-height:43px}.field input:focus,.field select:focus,.field textarea:focus{border-color:#739bff;box-shadow:0 0 0 3px #eaf0ff}.field textarea{resize:vertical;min-height:76px}.field-hint{font-size:10px;color:#a0a9b4;line-height:1.5}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.form-grid .full{grid-column:1/-1}.modal-backdrop{position:fixed;inset:0;background:rgba(17,24,39,.43);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:30;padding:18px}.modal{background:white;border:1px solid #e7e9ee;border-radius:22px;box-shadow:0 25px 80px rgba(0,0,0,.17);width:min(100%,520px);max-height:min(90vh,900px);overflow:auto}.modal-header{padding:24px 27px 16px;display:flex;justify-content:space-between;align-items:flex-start}.modal-header h2{font-size:22px;letter-spacing:-.8px;margin:0}.modal-header p{font-size:12px;color:#929aa6;margin:7px 0 0}.modal-close{background:#f3f5f8;border:0;color:#7c8795;width:30px;height:30px;border-radius:9px}.modal-body{padding:10px 27px 24px}.modal-actions{border-top:1px solid #eef0f3;padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:12px}.toggle-row{display:flex;align-items:center;gap:10px;padding:3px 0;color:#546173;font-weight:600;font-size:12px}.toggle-row input{width:17px;height:17px;accent-color:#285ce6}.color-options{display:flex;gap:9px}.color-option{width:32px;height:32px;border:3px solid #fff;outline:1px solid transparent;border-radius:10px;box-shadow:0 0 0 1px #e8ebf0 inset}.color-option.chosen{outline:2px solid #222f44}.notice{display:flex;align-items:flex-start;gap:10px;background:#f5f8ff;border:1px solid #e8eeff;color:#7181a2;font-size:11px;line-height:1.65;border-radius:12px;padding:12px 13px}.notice .icon{color:#3863d4;flex:none;margin-top:1px}.toast{position:fixed;right:24px;bottom:25px;background:#1d2737;color:#fff;box-shadow:0 9px 30px rgba(0,0,0,.17);padding:13px 17px;border-radius:12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:9px;z-index:45;animation:toastIn .22s ease}.toast .icon{color:#61d4a5}@keyframes toastIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}.mini-banner{padding:16px 21px;display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f0f5ff;border:1px solid #e1eaff;border-radius:14px;margin-bottom:21px}.mini-banner strong{display:block;font-size:12px;color:#3e5c98}.mini-banner span{display:block;font-size:11px;color:#8192b2;margin-top:4px}.report-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}.report-section{padding:25px}.report-title{font-size:16px;letter-spacing:-.3px;font-weight:730;margin:0}.report-sub{font-size:12px;color:#98a2ae;margin:7px 0 0}.report-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid #f0f1f4;font-size:12px}.report-row:last-child{border:0}.report-row .left{color:#687687}.report-row b{color:#1d2c42}.report-students{margin-top:20px}.report-progress{height:6px;border-radius:5px;background:#f0f2f5;overflow:hidden;margin-top:7px}.report-progress div{height:100%;background:#4d76e9;border-radius:5px}.report-student{padding:14px 0}.report-student-label{display:flex;justify-content:space-between;font-size:12px}.report-student-label span{color:#7f8b99}.year-total{color:#96a0ad;font-size:12px;margin-top:12px}.mobile-menu{display:none}.footer{margin-top:36px;color:#a9b0ba;font-size:11px;text-align:center}.footer a{color:#8199ca;text-decoration:none}.small-stat{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#8390a1}.small-stat .icon{width:13px;height:13px}.muted{color:#96a0ad}
+    @media(max-width:1200px){.sidebar{width:212px}.main{padding:34px 28px 70px}.lesson-row{grid-template-columns:27px minmax(105px,1.1fr) minmax(115px,1.1fr) 65px 26px;gap:8px;padding:15px 16px}.lesson-row .duration-col{display:none}.metric{padding:19px}.split{grid-template-columns:1.35fr 1fr}}
+    @media(max-width:950px){.sidebar{width:77px;padding:24px 11px}.brand{padding:2px 9px 30px}.brand-text-wrap,.nav-btn span,.nav-label,.sidebar-foot{display:none}.nav-btn{justify-content:center;padding:14px 10px}.main{padding:28px 23px 70px}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.student-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}.report-grid{grid-template-columns:1fr}}
+    @media(max-width:650px){.app{display:block}.sidebar{position:fixed;bottom:0;top:auto;width:100%;height:66px;min-height:0;flex-direction:row;justify-content:center;padding:6px 8px;border-right:0;border-top:1px solid #e6e8ec;box-shadow:0 -6px 20px rgba(0,0,0,.035);background:rgba(255,255,255,.97);backdrop-filter:blur(16px)}.brand,.nav-label,.nav-spacer,.sidebar-foot{display:none}.nav-wrap{display:flex;align-items:center;justify-content:space-around;width:100%}.nav-btn{width:auto;flex:1;flex-direction:column;gap:3px;font-size:9px;padding:8px 3px;border-radius:10px;margin:0;min-width:0}.nav-btn span{display:block}.nav-btn .icon{width:19px;height:19px}.main{padding:26px 15px 105px}.topbar{flex-direction:column;gap:15px;margin-bottom:25px}.page-title{font-size:32px}.top-actions{justify-content:flex-start;width:100%;padding:0}.month-picker{flex:1;justify-content:space-between}.month-picker strong{min-width:95px}.metric-grid{gap:10px}.metric{min-height:132px;padding:17px}.metric-label{font-size:11px}.metric-number{font-size:29px;margin:17px 0 8px}.metric-ico{width:27px;height:27px}.metric-ico .icon{width:15px}.metric-meta{font-size:10px;line-height:1.4}.student-grid,.settings-grid{grid-template-columns:1fr}.section-heading{margin-top:25px}.lesson-toolbar{padding:16px}.lesson-row{grid-template-columns:27px minmax(90px,1.1fr) minmax(95px,1fr) 55px 25px;gap:7px;padding:13px 12px;min-height:66px}.lesson-row .hours,.lesson-row .duration-col{display:none}.lesson-row .money{font-size:11px}.lesson-row .who{gap:6px}.lesson-row .who .avatar{width:28px;height:28px;font-size:10px}.lesson-row .date-main{font-size:11px}.lesson-row .date-sub{font-size:10px}.lesson-row .student-name{font-size:11px}.week-header{padding:12px 13px}.week-header small{font-size:9px}.calendar{padding:10px}.calendar-grid{gap:3px}.day-box{padding:5px 3px;min-height:83px;border-radius:7px}.day-number{font-size:10px}.cal-lesson{font-size:8px;padding:4px 2px}.day-plus{width:14px}.day-head{font-size:9px}.form-grid{gap:12px}.modal-header{padding:20px 20px 12px}.modal-body{padding:10px 20px 20px}.modal-actions{padding:15px 20px}.filter-select{max-width:140px}.search-input input{max-width:110px}.footer{line-height:1.5}.insight-card{padding:21px}}
+    @media(max-width:370px){.top-actions .btn.primary{padding:11px}.toolbar-right{width:100%}.lesson-row{grid-template-columns:26px minmax(80px,1fr) minmax(83px,1fr) 44px 24px;gap:4px}.lesson-row .who .avatar{display:none}.metric-number{font-size:25px}}
+  
+/* Lesson Studio v2: compact navigation, two sortable lists and Apple Calendar sync. */
+.check-btn {display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;line-height:0!important;flex:none;}
+.check-btn .icon {display:block;flex:none;transform:translate(0,0);width:15px;height:15px;stroke-width:2.8;}
+.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mini-add,.student-edit{background:transparent;border:0;color:#5475be;display:inline-flex;align-items:center;gap:5px;font-weight:650;padding:5px;border-radius:7px;white-space:nowrap}
+.mini-add:hover,.student-edit:hover{background:#edf3ff}.student-edit{margin-left:4px;padding:2px;vertical-align:middle}.student-edit .icon{width:12px;height:12px}
+.icon-action{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;padding:0!important;border-radius:13px!important}
+.sync-banner{display:flex;gap:14px;align-items:center;background:linear-gradient(110deg,#f1f6ff,#f9fbff);border:1px solid #e3edff;border-radius:17px;padding:15px 18px;margin-bottom:21px}
+.sync-logo{width:40px;height:40px;background:#e5edff;color:#3769e8;display:grid;place-items:center;border-radius:12px;flex:none}
+.sync-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}.sync-body strong{font-size:13px}.sync-body span{font-size:12px;color:#718199;line-height:1.5;overflow-wrap:anywhere}.sync-button{white-space:nowrap;padding:9px 13px!important;font-size:12px!important}
+.year-total{padding-top:14px;margin-top:14px;border-top:1px solid #eff0f3;color:#738094;font-size:12px}
+.month-breakdown{padding:22px 24px;margin-top:21px}.breakdown-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}.breakdown-grid>div{background:#f8fafc;padding:15px;border-radius:12px;display:flex;flex-direction:column;gap:8px}.breakdown-grid span{color:#8390a2;font-size:12px}.breakdown-grid strong{font-size:20px;font-weight:710;letter-spacing:-.5px}
+.lesson-page-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:0 0 12px}.lesson-page-desc{font-size:12px;color:#8992a0}.lesson-page-desc strong{color:#374051}
+.lesson-filters{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap}.lesson-filters .search-input{background:#fff;min-width:180px;flex:1;border:1px solid #e8ebf0;border-radius:11px}.lesson-filters .filter-select{background:#fff;border:1px solid #e8ebf0;border-radius:10px;padding:10px 12px;min-height:40px}.sort-wrap{display:flex;gap:9px;align-items:center;color:#77818f;font-size:12px}.sort-wrap select{max-width:250px}
+.lesson-boxes{display:grid;grid-template-columns:1fr;gap:21px}.lesson-box{overflow:hidden}.lesson-box-header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:22px 22px 17px;border-bottom:1px solid #f0f1f5}.lesson-box-header h2{font-size:16px;font-weight:730;margin:0;letter-spacing:-.3px}.lesson-box-header p{margin:7px 0 0;font-size:12px;color:#9aa3ae}.box-count{font-size:11px;vertical-align:2px;background:#f0f3f8;color:#8994a5;border-radius:25px;padding:3px 8px;margin-left:5px;font-weight:650}.box-value{font-size:15px;font-weight:750;white-space:nowrap}.empty-box{padding:30px 22px;text-align:center;color:#a0aab5;font-size:13px}
+.settings-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}.settings-card{padding:20px!important}.settings-card h3{display:flex;align-items:center;gap:7px}.settings-card .notice{font-size:12px}.calendar-settings{grid-column:1/-1}.calendar-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.calendar-file{border-top:1px solid #edf0f4;margin-top:18px;padding-top:16px;display:flex;justify-content:space-between;align-items:center;gap:14px}.calendar-file>div{display:flex;flex-direction:column;gap:5px}.calendar-file span{color:#8b96a6;font-size:12px}.calendar-file strong{font-size:13px}.privacy-warning{margin-top:20px}.settings-student-row{display:flex;align-items:center;gap:9px;border-bottom:1px solid #f0f1f3;padding:9px 0}.settings-student-row b{flex:1}.settings-student-row .avatar{width:30px;height:30px}
+#calendar-url{width:100%;font-size:13px}
+#modal-root .modal:has(.calendar-settings){max-width:740px;max-height:89vh;overflow-y:auto}
+@media(max-width:650px){.month-breakdown{padding:17px}.breakdown-grid{grid-template-columns:repeat(2,1fr)}.lesson-page-toolbar{align-items:flex-start}.lesson-filters{flex-direction:column;align-items:stretch}.lesson-filters .search-input,.lesson-filters .filter-select{width:100%;flex:none}.sort-wrap{justify-content:space-between}.sort-wrap select{max-width:75%;width:auto}.lesson-box-header{padding:15px 14px}.lesson-row{padding:13px 11px}.sync-banner{padding:12px;gap:10px;flex-wrap:wrap}.sync-body{flex-basis:60%}.sync-button{margin-left:auto}.settings-grid{grid-template-columns:1fr!important}.calendar-settings{grid-column:auto}.calendar-file{align-items:flex-start;flex-direction:column}.icon-action{width:36px;height:36px}.top-actions{gap:8px}}
+
+.lesson-toolbar-actions{display:flex;align-items:center;gap:9px}.light-add{background:#fff!important;border:1px solid #e7ebf1!important;color:#52627b!important;white-space:nowrap;font-size:12px!important}
+@media(max-width:650px){.lesson-toolbar-actions{gap:5px}.light-add{padding:9px!important;font-size:11px!important}.lesson-page-toolbar{align-items:center}}
+
+/* v3: the colour always denotes the student, never the lesson status. */
+.cal-lesson,.cal-lesson.done{background:var(--student-bg)!important;color:var(--student-ink)!important;border:0;border-left:3px solid var(--student-ink);display:flex;align-items:center;justify-content:space-between;gap:3px;font-weight:720;font-size:12px;min-height:29px;padding:5px 7px;}
+.cal-lesson .cal-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;flex:1;min-width:0}
+.cal-check{font-size:12px;line-height:1;font-weight:850;flex:none}
+.lesson-row{min-height:83px;grid-template-columns:32px minmax(145px,1.1fr) minmax(155px,1.12fr) 70px 84px 32px;gap:12px}
+.lesson-row .student-name{font-size:17px;font-weight:720;letter-spacing:-.35px}
+.lesson-row .date-main{font-size:16px;font-weight:690;letter-spacing:-.3px}
+.lesson-row .date-sub{font-size:12px}
+.lesson-row .who .avatar{width:38px;height:38px;font-size:14px}
+.lesson-row .check-btn{width:29px;height:29px}
+.weekly-settings-list{border-top:1px solid var(--line);margin-top:18px}
+.weekly-rule{display:flex;align-items:center;justify-content:space-between;gap:9px;border-bottom:1px solid var(--line);padding:11px 0}
+.weekly-rule-person{display:flex;align-items:center;gap:10px;min-width:0}
+.weekly-rule-person strong{display:block;font-size:13px}
+.weekly-rule-person span:not(.avatar){display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.timetable-settings{grid-column:1/-1}
+@media(max-width:1200px){.lesson-row{grid-template-columns:29px minmax(125px,1.1fr) minmax(138px,1.1fr) 70px 30px;gap:9px}.lesson-row .duration-col{display:none}}
+@media(max-width:700px){.lesson-row{grid-template-columns:30px minmax(92px,1fr) minmax(100px,1.05fr) 54px 25px;min-height:82px;gap:6px;padding:14px 10px}.lesson-row .student-name{font-size:14px!important}.lesson-row .date-main{font-size:14px!important}.lesson-row .date-sub{font-size:10px}.lesson-row .who .avatar{width:30px;height:30px;font-size:12px}.lesson-row .money{font-size:12px}.cal-lesson{font-size:10px!important;min-height:23px;padding:4px 3px}}
+@media(max-width:370px){.lesson-row{grid-template-columns:29px minmax(79px,1fr) minmax(90px,1fr) 45px 23px;gap:5px}.lesson-row .student-name{font-size:13px!important}.lesson-row .date-main{font-size:13px!important}}
+
+
+.calendar-legend{display:flex;align-items:center;flex-wrap:wrap;gap:9px 20px;padding:11px 12px 17px;color:#6d7887;font-size:12px;font-weight:620}
+.legend-student{display:inline-flex;align-items:center;gap:7px}
+.legend-student i{display:inline-block;width:9px;height:9px;border-radius:50%}
+@media(max-width:700px){.calendar-legend{gap:8px 14px;font-size:10px;padding:7px 7px 13px}}
+
+/* Weekly columns: full Monday–Sunday weeks in both overlapping months. */
+.week-intro{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:4px 0 15px;flex-wrap:wrap}
+.week-intro-copy{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.week-intro h2{font-size:17px;letter-spacing:-.45px;margin:0;font-weight:730}
+.week-intro .week-intro-note{color:#8c97a5;font-size:12px;line-height:1.45}
+.week-intro .month-stats{font-size:12px;font-weight:700;color:#607089;background:#f0f3f8;border-radius:999px;padding:7px 11px}
+.week-board-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding:2px 1px 13px;scrollbar-width:thin;scrollbar-color:#d5deeb transparent}
+.week-board{display:grid;align-items:stretch;gap:13px}
+.week-column{min-width:0;overflow:hidden;background:#fff;border:1px solid #e8ecf2;border-radius:18px;box-shadow:0 4px 20px rgba(22,35,61,.04);display:flex;flex-direction:column}
+.week-column.current-week{border-color:#afc4ff;box-shadow:0 0 0 2px #ebf0ff,0 6px 22px rgba(30,70,160,.06)}
+.week-card-top{padding:17px 16px 14px;border-bottom:1px solid #f0f2f6}
+.week-title-line{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.week-number{font-size:17px;letter-spacing:-.55px;color:#202d41;font-weight:750}
+.week-progress-badge{font-size:11px;color:#58708b;background:#f0f4fa;padding:5px 8px;border-radius:999px;font-weight:730;white-space:nowrap}
+.week-progress-badge.all-done{background:#e4f6ee;color:#197650}
+.week-dates{font-size:12px;color:#919baa;margin-top:5px;line-height:1.4}
+.week-money{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:15px}
+.week-money strong{font-size:23px;letter-spacing:-.9px;font-weight:760;color:#1d2a3c;white-space:nowrap}
+.week-money span{font-size:11px;color:#9ca5b2;white-space:nowrap}
+.week-progress-track{height:5px;background:#edf1f7;border-radius:9px;overflow:hidden;margin-top:12px}
+.week-progress-track>span{display:block;height:100%;background:#38a982;border-radius:inherit;transition:width .2s}
+.week-card-body{padding:8px 10px 13px;flex:1}
+.week-section-head{display:flex;justify-content:space-between;align-items:center;padding:10px 6px 7px;font-size:10px;font-weight:770;color:#8a96a5;text-transform:uppercase;letter-spacing:1px}
+.week-section-head .week-section-count{color:#a2aab5;font-size:10px;font-weight:720;letter-spacing:0}
+.week-task{display:flex;align-items:center;gap:8px;min-height:57px;border-radius:11px;margin:0 0 6px;background:var(--student-bg,#f8faff);padding:8px 8px 8px 9px;border-left:3px solid var(--student-ink,#c4ccdb);min-width:0}
+.week-task.done{background:color-mix(in srgb,var(--student-bg,#f7f8fa) 63%,white)}
+.week-task .check-btn{width:24px;height:24px;min-width:24px;background:white;border-color:#c8d0db}
+.week-task .check-btn.checked{background:#219a73;border-color:#219a73}
+.week-task .check-btn .icon{width:13px;height:13px}
+.week-task-main{display:flex;flex-direction:column;justify-content:center;min-width:0;flex:1;gap:3px}
+.week-task-name{font-size:14px;line-height:1.2;letter-spacing:-.2px;font-weight:755;color:#283447;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.week-task-date{font-size:11.5px;color:#6f7e91;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.week-task-edit{width:25px;height:28px;border:0;background:transparent;border-radius:7px;flex:none;padding:5px;color:#8493a7;display:flex;align-items:center;justify-content:center}
+.week-task-edit:hover{background:rgba(255,255,255,.83);color:#234e9f}
+.week-task-edit .icon{width:16px;height:16px}
+.week-empty{font-size:11.5px;color:#acb4c0;margin:4px 6px 8px;line-height:1.5}
+.week-divider{height:1px;margin:10px 6px 2px;background:#edf0f4}
+.week-card-foot{padding:11px 15px 13px;border-top:1px solid #f0f2f6;color:#8490a0;font-size:11px;display:flex;align-items:center;justify-content:space-between}
+.week-card-foot b{font-size:11px;font-weight:720;color:#4d5b6d}
+.week-board-help{font-size:11.5px;line-height:1.6;color:#929cab;margin:8px 2px 0}
+@media(max-width:950px){.week-board-help{font-size:11px}.week-intro{margin-top:8px}}
+/* v6: seven compact draggable day slots in each weekly column. */
+.week-days{flex:1;padding:8px 8px 10px;display:flex;flex-direction:column;gap:5px}
+.week-day-slot{min-width:0;min-height:52px;padding:6px 5px;border-radius:11px;border:1px solid #e9edf3;background:#fdfdff;transition:background .12s,border-color .12s,box-shadow .12s}
+.week-day-slot.adjacent-day{background:#fafbfd;border-color:#f0f2f6}
+.week-day-slot.today-slot{border-color:#abc1ff;background:#f7f9ff}
+.week-day-slot.drop-hover{background:#eaf2ff;border:2px dashed #4976f2;padding:5px 4px;box-shadow:0 0 0 2px rgba(63,112,238,.10)}
+.week-day-heading{display:flex;align-items:center;gap:5px;padding:0px 3px 3px;color:#8491a2;font-size:10px;font-weight:750;min-height:19px}
+.today-slot .week-day-heading{color:#3264df}
+.week-day-slot.drop-hover .week-day-heading{color:#285cdc}
+.day-count{color:#94a4b6;background:#edf1f7;font-size:9px;padding:2px 4px;border-radius:5px;white-space:nowrap;margin-left:auto}
+.day-add{border:0;background:transparent;color:#bcc5d1;margin-left:auto;width:18px;height:18px;display:grid;place-items:center;border-radius:5px;padding:2px;opacity:.35}
+.week-day-slot:hover .day-add,.day-add:focus-visible{opacity:1}
+.day-add:hover{color:#335dd6;background:#e8eeff}
+.day-count+.day-add{margin-left:0}
+.day-drop-hint{display:block;font-size:10px;color:#c0cad6;line-height:1.2;padding:3px 4px 1px}
+.week-day-slot.drop-hover .day-drop-hint{color:#3566d9;font-weight:720}
+.week-day-items{display:flex;flex-direction:column;gap:4px}
+.day-task{display:flex;align-items:center;gap:5px;min-width:0;min-height:39px;padding:5px 4px 5px 6px;border-radius:8px;border-left:3px solid var(--student-ink);background:var(--student-bg);cursor:grab;user-select:none}
+.day-task:active{cursor:grabbing}
+.day-task.done{background:color-mix(in srgb,var(--student-bg) 67%,white)}
+.day-task .check-btn{width:20px;height:20px;min-width:20px;border-width:1.5px;background:#fff}
+.day-task .check-btn.checked{background:#249b75;border-color:#249b75}
+.day-task .check-btn .icon{width:12px;height:12px}
+.day-task-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+.day-task-name{font-size:13px;font-weight:750;line-height:1.12;color:#293649;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.day-task-detail{font-size:10px;color:#6f7d8d;line-height:1.1;white-space:nowrap}
+.day-task-move,.day-task-edit{width:17px;height:25px;flex:none;border:0;border-radius:5px;display:grid;place-items:center;background:transparent;color:#8c99aa;padding:1px}
+.day-task-move{cursor:grab;touch-action:none}
+.day-task-move:active{cursor:grabbing}
+.day-task-move:hover,.day-task-edit:hover{color:#2c59c5;background:rgba(255,255,255,.72)}
+.day-task-edit .icon,.day-task-move .icon{width:14px;height:14px}
+.day-task.drag-origin{opacity:.34}
+.drag-floating{position:fixed;pointer-events:none;z-index:9999;box-shadow:0 13px 32px rgba(23,49,110,.23);border:1px solid #bdd0ff;border-left:3px solid var(--student-ink,#6388c8);transform:rotate(-2deg);opacity:.95;cursor:grabbing}
+body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
+.move-day-options{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:10px 0 20px}
+.move-day-choice{display:flex;flex-direction:column;align-items:center;gap:6px;background:#f8fafc;border:1px solid #e7ecf4;border-radius:11px;padding:13px 3px;color:#34435a;font-weight:740;font-size:13px;min-width:0}
+.move-day-choice small{color:#8b99a9;font-size:10px;font-weight:650}
+.move-day-choice:hover,.move-day-choice.selected{background:#ecf3ff;border-color:#8caafd;color:#2157cf}
+@media(max-width:650px){.week-card-top{padding:15px}.week-intro h2{font-size:16px}.week-intro .week-intro-note{font-size:11px}.move-day-options{gap:3px}.move-day-choice{padding:12px 1px;font-size:12px}}
+
+/* v7: Keep the real date, but organise individual lessons under another week. */
+.week-keep-zone{margin:8px 10px 0;min-height:31px;display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;padding:6px 4px;border:1px dashed #dce3ef;background:#fafbfe;border-radius:9px;font-size:10px;font-weight:710;color:#8291a7;text-align:center;transition:.12s}
+.week-keep-zone span{font-size:9px;font-weight:500;color:#acb5c3}
+.week-card-top[data-drop-week]{transition:background .12s,border-color .12s}
+.week-card-top.drop-hover,.week-keep-zone.drop-hover{background:#e6f0ff;color:#215bd8;border-color:#4e7af5;box-shadow:inset 0 0 0 1px #5a86f4}
+.week-card-top.drop-hover{outline:2px dashed #5987f7;outline-offset:-4px}
+.week-column.drop-hover{border-color:#5780e9;box-shadow:0 0 0 2px #aac2ff,0 5px 20px rgba(30,70,160,.06)}
+.week-carried{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;padding:7px 4px 8px;border:1px dashed #b8cae7;background:#f5f8ff;border-radius:10px}
+.carried-label{font-size:9px;color:#6681b5;letter-spacing:.4px;text-transform:uppercase;font-weight:780;margin:0 3px 2px;display:flex;justify-content:space-between}
+.week-carried .day-task{min-height:44px}
+.week-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:8px 0}
+.week-choice{padding:10px 4px;border-radius:10px;border:1px solid #dbe3ef;background:#f9fafc;color:#4c5c74;font-size:12px;font-weight:650;white-space:nowrap}
+.week-choice.active,.week-choice:hover{background:#eff4ff;color:#2559ce;border-color:#96b5ff}
+.reset-week{border:none;background:none;color:#2c65dd;font-size:12px;font-weight:680;padding:5px 0;text-align:left}
+@media(max-width:650px){.week-keep-zone span{display:none}.week-choice{font-size:11px}}
+
+
+.week-intro-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.week-month-control{font-size:11px;padding:7px 10px;min-height:31px;color:#536680}
+.week-title-actions{display:flex;align-items:center;gap:5px;min-width:0}
+.week-month-menu{border:0;background:transparent;color:#8290a4;width:24px;height:26px;border-radius:7px;display:grid;place-items:center;padding:2px}
+.week-month-menu:hover{background:#f1f5ff;color:#305fca}
+.boundary-week-row{padding:15px 0;border-bottom:1px solid #edf0f4}
+.boundary-week-row:last-child{border-bottom:0}
+.boundary-week-title{font-weight:740;color:#273449;margin-bottom:10px}
+.boundary-week-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.boundary-month-btn{border:1px solid #e2e8f2;border-radius:11px;background:#f9fafc;color:#627086;padding:11px 7px;font-weight:650;display:flex;gap:5px;justify-content:center;align-items:center}
+.boundary-month-btn.selected{background:#edf4ff;color:#245bc9;border-color:#86aaff}
+.boundary-month-btn:hover{border-color:#86aaff}
+@media(max-width:650px){.week-intro-controls{width:100%;justify-content:space-between}}
+</style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5.3a3 3 0 0 1 0 5.5M18 14a5 5 0 0 1 3 4.5V20"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-9M22 20v-6M2 20h22"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M16 14h2M6 5V3h13"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="5" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15M10 10v7M14 10v7"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 16 12-12 4 4-12 12-5 1zM14 6l4 4"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.7 9A7.5 7.5 0 0 1 19 7l1 5M4 12l1 5a7.5 7.5 0 0 0 13.3-2"/></symbol>
+  </svg>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark"><svg class="icon"><use href="#i-book" /></svg></div><div class="brand-text-wrap"><div class="brand-text">lesson studio<span style="color:#4672ec">.</span></div><div class="brand-sub">YOUR TUTORING SPACE</div></div></div>
+      <div class="nav-label">Workspace</div>
+      <nav class="nav-wrap" aria-label="Main navigation">
+        <button class="nav-btn active" data-nav="overview"><svg class="icon"><use href="#i-home"/></svg><span>Overview</span></button>
+        <button class="nav-btn" data-nav="lessons"><svg class="icon"><use href="#i-calendar"/></svg><span>Lessons</span></button>
+      </nav>
+      <div class="nav-spacer"></div>
+      <div class="sidebar-foot"><div class="privacy-icon"><span class="privacy-dot"></span>Saved in your browser</div><div class="side-foot-note">Your changes save automatically. Open Settings to export a backup anytime.</div></div>
+    </aside>
+    <main class="main"><header id="topbar"></header><div id="content"></div><div class="footer">Made for your tutoring business · <span id="foot-rate">£30</span>/hour · Progress saved locally</div></main>
+  </div>
+  <div id="modal-root"></div><div id="toast-root"></div><input type="file" id="import-file" accept="application/json,.json" style="display:none" />
+
+<script>
+(() => {
+  'use strict';
+  const STORAGE_KEY='lesson_studio_v1';
+  const DEFAULT_STUDENTS=[
+    {id:'s_aashraya',name:'Aashraya',color:'lavender',active:true},
+    {id:'s_krisha',name:'Krisha',color:'peach',active:true},
+    {id:'s_shreesha',name:'Shreesha',color:'mint',active:true}
+  ];
+  // Historical lessons transcribed from the latest supplied Notes screenshot.
+  // The dates take precedence when handwritten weekday labels do not match.
+  const EXAMPLE_LESSONS=[
+    ['s_krisha','2026-10-03',true],['s_shreesha','2026-10-03',true],
+    ['s_aashraya','2026-10-06',true],['s_aashraya','2026-10-06',true],['s_aashraya','2026-10-07',true],
+    ['s_aashraya','2026-10-13',true],['s_aashraya','2026-10-15',true],['s_aashraya','2026-10-16',true],
+    ['s_krisha','2026-10-18',true],['s_shreesha','2026-10-18',true]
+  ].map((x,i)=>({id:'seed_'+(i<8?i+1:i+2),studentId:x[0],date:x[1],time:'',hours:1,completed:x[2],notes:''}));
+  const SERIES_START='2026-10-19';
+  const DEFAULT_RULES=[
+    {id:'weekly_a_mon',studentId:'s_aashraya',weekday:0,time:'',hours:1,startDate:SERIES_START,active:true},
+    {id:'weekly_a_tue',studentId:'s_aashraya',weekday:1,time:'',hours:1,startDate:SERIES_START,active:true},
+    {id:'weekly_a_wed',studentId:'s_aashraya',weekday:2,time:'',hours:1,startDate:SERIES_START,active:true},
+    {id:'weekly_a_fri',studentId:'s_aashraya',weekday:4,time:'',hours:1,startDate:SERIES_START,active:true},
+    {id:'weekly_k_sat',studentId:'s_krisha',weekday:5,time:'',hours:1,startDate:SERIES_START,active:true},
+    {id:'weekly_s_sun',studentId:'s_shreesha',weekday:6,time:'',hours:1,startDate:SERIES_START,active:true}
+  ];
+  const SCREENSHOT_EXCEPTIONS=[
+    // These exceptions preserve the repeating rules for November onwards.
+    ['weekly_a_mon','2026-10-19','2026-10-23','s_aashraya',true,false],
+    ['weekly_a_tue','2026-10-20','2026-10-23','s_aashraya',true,false],
+    ['weekly_a_wed','2026-10-21','2026-10-24','s_aashraya',false,false],
+    ['weekly_a_fri','2026-10-23','2026-10-23','s_aashraya',false,true],
+    ['weekly_k_sat','2026-10-24','2026-10-24','s_krisha',false,true],
+    ['weekly_s_sun','2026-10-25','2026-10-25','s_shreesha',false,true],
+    ['weekly_s_sun','2026-11-01','2026-10-31','s_shreesha',false,false]
+  ].map(([ruleId,originalDate,date,studentId,completed,deleted])=>({id:'rec:'+ruleId+':'+originalDate,ruleId,originalDate,studentId,date,time:'',hours:1,completed,deleted,notes:''}));
+  const SCREENSHOT_ADDITIONS=[
+    {id:'snapshot_krisha_20261026',studentId:'s_krisha',date:'2026-10-26',time:'',hours:1,completed:true,notes:''},
+    {id:'snapshot_shreesha_20261027',studentId:'s_shreesha',date:'2026-10-27',time:'',hours:1,completed:false,notes:''}
+  ];
+  function screenshotLessons(){return [...structuredClone(EXAMPLE_LESSONS),...structuredClone(SCREENSHOT_EXCEPTIONS),...structuredClone(SCREENSHOT_ADDITIONS)];}
+  function defaults(){return {version:4,hourlyRate:30,students:structuredClone(DEFAULT_STUDENTS),lessons:screenshotLessons(),recurringRules:structuredClone(DEFAULT_RULES),weekMonthOverrides:{}};}
+  function readStore(){try{let raw=localStorage.getItem(STORAGE_KEY);if(!raw)return defaults();let data=JSON.parse(raw);if(!data||!Array.isArray(data.students)||!Array.isArray(data.lessons))throw Error('Invalid data');return data;}catch(err){console.error('Unable to read saved data',err);return defaults();}}
+  let db=readStore();
+  // Upgrade data saved by earlier versions on this same website/domain without losing edits.
+  function migrateData(){
+    db.recurringRules ||= structuredClone(DEFAULT_RULES);
+    db.lessons ||= [];
+    if(Number(db.version)<3){
+      // Imported Apple lessons become ordinary, editable, locally stored lessons.
+      for(let l of db.lessons){delete l.calendarKey;delete l.calendarSource;}
+      // Preserve any custom changes to the original seeded entries.
+      const friday16=db.lessons.find(l=>l.id==='seed_8');
+      if(friday16 && friday16.date==='2026-10-16'&&friday16.studentId==='s_aashraya')friday16.completed=true;
+      const extra=db.lessons.find(l=>l.id==='seed_9');
+      if(extra && extra.date==='2026-10-16'&&extra.studentId==='s_aashraya'&&extra.hours===1&&!extra.time&&!extra.notes){
+        db.lessons=db.lessons.filter(l=>l!==extra);
+      }
+      const oldSeeds=[
+        ['seed_12','weekly_a_mon','2026-10-19'],['seed_13','weekly_a_tue','2026-10-20'],
+        ['seed_14','weekly_a_wed','2026-10-21'],['seed_15','weekly_a_fri','2026-10-23'],
+        ['seed_16','weekly_k_sat','2026-10-24'],['seed_17','weekly_s_sun','2026-10-25']
+      ];
+      for(let [seedId,ruleId,originalDate] of oldSeeds){
+        let l=db.lessons.find(x=>x.id===seedId);
+        if(l){l.id='rec:'+ruleId+':'+originalDate;l.ruleId=ruleId;l.originalDate=originalDate;}
+      }
+      delete db.calendarUrl; delete db.lastCalendarSync;
+    }
+    if(Number(db.version)<4){
+      // Upgrade an untouched v6 starter dataset to the supplied 26 October
+      // screenshot. Never overwrite an edited calendar or personal entries.
+      const originalIds=new Set(['seed_1','seed_2','seed_3','seed_4','seed_5','seed_6','seed_7','seed_8','seed_10','seed_11']);
+      const octoberRecords=db.lessons.filter(l=>l.date?.startsWith('2026-10')||l.originalDate?.startsWith('2026-10'));
+      const pristine=octoberRecords.length===10 && octoberRecords.every(l=>originalIds.has(l.id)) && originalIds.size===octoberRecords.length &&
+        octoberRecords.every(l=>!l.ruleId&&!l.notes&&!l.time&&Number(l.hours)===1 && !l.deleted && !l.displayWeekStart) &&
+        db.recurringRules.length===DEFAULT_RULES.length && db.recurringRules.every(r=>DEFAULT_RULES.some(x=>x.id===r.id&&x.weekday===r.weekday&&x.studentId===r.studentId));
+      if(pristine){
+        const screenshotIds=new Set(screenshotLessons().map(l=>l.id));
+        db.lessons=db.lessons.filter(l=>!originalIds.has(l.id)&&!screenshotIds.has(l.id)).concat(screenshotLessons());
+      }
+    }
+    db.version=4;
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}catch(error){console.warn('Could not persist migrated data',error);}
+  }
+  migrateData();
+  const today = new Date();today.setHours(0,0,0,0);
+  let selectedMonth=new Date(today.getFullYear(),today.getMonth(),1);
+  let page='overview',view='list',filter='all',studentFilter='all',search='',sortMode='smart',modalKind=null,toastTimer;
+  const $=sel=>document.querySelector(sel);
+  const icon=(name,cls='')=>`<svg class="icon ${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+  const esc=(v='')=>String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const money=n=>new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',minimumFractionDigits:0,maximumFractionDigits:Number(n)%1?2:0}).format(Number(n)||0);
+  const decimal=n=>Number.isInteger(+n)?String(n):Number(n).toFixed(2).replace(/0$/,'');
+  const dateAt=s=>new Date(s+'T12:00:00');
+  const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const addDays=(str,days)=>{let d=dateAt(str);d.setDate(d.getDate()+days);return iso(d)};
+  const monthKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+  const monthDate=(year,mon)=>new Date(year,mon,1);
+  const monthTitle=d=>d.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  const dayMonth=s=>dateAt(s).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+  const weekday=s=>dateAt(s).toLocaleDateString('en-GB',{weekday:'short'});
+  const hoursLabel=n=>`${decimal(n)} ${Number(n)===1?'hr':'hrs'}`;
+  const rate=()=>Number(db.hourlyRate)||30;
+  const studentById=id=>db.students.find(s=>s.id===id)||{id,name:'Former student',color:'slate',active:false};
+  const studentPalette={lavender:['#f1edff','#7355b4'],peach:['#fff0e8','#c97953'],mint:['#e4f7f1','#349475'],blue:['#e8f0ff','#5275c7'],pink:['#ffeaf3','#b75a86'],sand:['#fff4dd','#aa8334'],slate:['#edf1f5','#708093']};
+  const avatar=(student,cls='')=>{let colors=studentPalette[student.color]||studentPalette.slate;return `<span class="avatar ${cls}" style="background:${colors[0]};color:${colors[1]}">${esc(student.name.trim().charAt(0).toUpperCase()||'?')}</span>`;};
+  // Weekly template generates occurrences on demand, even years into the future.
+  // Only exceptions / marked complete instances are stored, so there is no fixed end date.
+  const recurringId=(ruleId,date)=>'rec:'+ruleId+':'+date;
+  function recurringForMonth(d){
+    let start=iso(new Date(d.getFullYear(),d.getMonth(),1));
+    let end=iso(new Date(d.getFullYear(),d.getMonth()+1,0));
+    let generated=[];
+    for(let rule of db.recurringRules){
+      if(rule.active===false||rule.endDate&&rule.endDate<start||rule.startDate>end)continue;
+      let first=dateAt(start),offset=(Number(rule.weekday)-(first.getDay()+6)%7+7)%7;
+      first.setDate(first.getDate()+offset);
+      for(let cursor=first;iso(cursor)<=end;cursor.setDate(cursor.getDate()+7)){
+        let date=iso(cursor),id=recurringId(rule.id,date);
+        if(date<rule.startDate||rule.endDate&&date>rule.endDate)continue;
+        // Individual edits, cancellation and completion take precedence over the rule.
+        if(db.lessons.some(l=>l.id===id))continue;
+        generated.push({id,ruleId:rule.id,originalDate:date,studentId:rule.studentId,date,time:rule.time||'',hours:Number(rule.hours),completed:false,notes:''});
+      }
+    }
+    return generated;
+  }
+  const lessonsInMonth=d=>[...db.lessons.filter(l=>!l.deleted&&l.date.startsWith(monthKey(d))),...recurringForMonth(d)].sort(sortLessons);
+  function lessonById(id){let date=id.slice(-10);return db.lessons.find(l=>l.id===id)|| (id.startsWith('rec:')?recurringForMonth(monthDate(Number(date.slice(0,4)),Number(date.slice(5,7))-1)).find(l=>l.id===id):null);}
+  function saveOccurrence(l){let saved=db.lessons.find(x=>x.id===l.id);if(saved)Object.assign(saved,l);else db.lessons.push({...l});}
+  const sortLessons=(a,b)=>a.date.localeCompare(b.date)||(a.time||'99:99').localeCompare(b.time||'99:99')||String(a.id).localeCompare(String(b.id));
+  const totalHours=list=>list.reduce((a,l)=>a+Number(l.hours),0);
+  function stats(list){const done=list.filter(l=>l.completed),remaining=list.filter(l=>!l.completed);return {count:list.length,done:done.length,pending:remaining.length,doneHours:totalHours(done),hours:totalHours(list),remainingHours:totalHours(remaining),earned:totalHours(done)*rate(),projected:totalHours(list)*rate()};}
+  function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}catch(err){alert('Your browser could not save your changes. Please export a backup from Settings.');console.error(err);}render();}
+  function goto(p){page=p;document.querySelectorAll('[data-nav]').forEach(el=>el.classList.toggle('active',el.dataset.nav===p));window.scrollTo({top:0,behavior:'smooth'});render();}
+  function toast(msg){clearTimeout(toastTimer);$('#toast-root').innerHTML=`<div class="toast" role="status">${icon('check','small')}${esc(msg)}</div>`;toastTimer=setTimeout(()=>$('#toast-root').innerHTML='',3300);}
+  function topbar(){
+    let meta={overview:['Overview','Your tutoring, beautifully organised.'],lessons:['Lessons','Every session, in one clear place.']}[page];
+    return `<div class="topbar"><div><p class="eyebrow">YOUR TUTORING WORKSPACE</p><h1 class="page-title">${meta[0]}<span style="color:#3769ef">.</span></h1><p class="page-subtitle">${meta[1]}</p></div><div class="top-actions"><div class="month-picker"><button type="button" aria-label="Previous month" data-month="-1">${icon('left','small')}</button><strong>${esc(monthTitle(selectedMonth))}</strong><button type="button" aria-label="Next month" data-month="1">${icon('right','small')}</button></div><button class="btn icon-action" data-action="open-settings" title="Settings and weekly timetable" aria-label="Settings and weekly timetable">${icon('settings','small')}</button></div></div>`;
+  }
+  function metricsHtml(s){return `<div class="metric-grid"><div class="card metric"><div class="metric-top"><span class="metric-label">Earned this month</span><span class="metric-ico green">${icon('wallet')}</span></div><div class="metric-number">${money(s.earned)}</div><div class="metric-meta"><b>${hoursLabel(s.doneHours)}</b> of lessons completed</div></div><div class="card metric"><div class="metric-top"><span class="metric-label">Potential earnings</span><span class="metric-ico blue">${icon('target')}</span></div><div class="metric-number">${money(s.projected)}</div><div class="metric-meta">Completed + planned sessions</div></div><div class="card metric"><div class="metric-top"><span class="metric-label">Still to earn</span><span class="metric-ico">${icon('clock')}</span></div><div class="metric-number">${money(s.projected-s.earned)}</div><div class="metric-meta"><b>${s.pending}</b> lessons yet to complete</div></div><div class="card metric"><div class="metric-top"><span class="metric-label">Lessons completed</span><span class="metric-ico">${icon('check')}</span></div><div class="metric-number">${s.done}<span style="font-size:.58em;color:#a0a7b1;font-weight:550"> / ${s.count}</span></div><div class="metric-meta"><b>${s.hours?Math.round(s.doneHours/s.hours*100):0}%</b> of scheduled hours taught</div></div></div>`;}
+  function trendMonths(count=6){return Array.from({length:count},(_,i)=>monthDate(selectedMonth.getFullYear(),selectedMonth.getMonth()-(count-1-i)));}
+  function chartHtml(months){let max=Math.max(1,...months.map(m=>stats(lessonsInMonth(m)).projected));return `<div class="chart-wrap">${months.map(m=>{let s=stats(lessonsInMonth(m)),all=s.projected/max*100,earned=s.earned/max*100;return `<div class="chart-col ${monthKey(m)===monthKey(selectedMonth)?'current':''}" title="${esc(monthTitle(m))}: ${money(s.earned)} earned, ${money(s.projected)} potential"><div class="chart-bar-wrap"><div class="chart-future" style="height:${Math.max(0,all-earned)}%;${all>0&&all-earned>0?'min-height:2px':''}"></div><div class="chart-earned" style="height:${earned}%;${earned>0?'min-height:2px':''}"></div></div></div>`}).join('')}</div><div class="chart-labels">${months.map(m=>`<span>${esc(m.toLocaleDateString('en-GB',{month:'short'}))}</span>`).join('')}</div><div class="legend"><span><i></i> Earned</span><span><i class="pale"></i> Planned</span></div>`;}
+  function studentsSummary(list){return db.students.filter(x=>x.active||list.some(l=>l.studentId===x.id)).map(s=>{let per=stats(list.filter(l=>l.studentId===s.id));return {...s,...per};}).sort((a,b)=>b.projected-a.projected);}
+  function studentsPanel(list){let all=studentsSummary(list);return `<div class="card insight-card"><div class="panel-head"><div><div class="toolbar-title">Your students</div><p class="toolbar-sub">${esc(monthTitle(selectedMonth))} breakdown</p></div><button class="mini-add" data-action="add-student" title="Add student">${icon('plus','small')} Add</button></div><div style="margin-top:15px">${all.length?all.map(s=>`<div class="student-row">${avatar(s)}<div class="student-info"><div class="student-name">${esc(s.name)} <button class="student-edit" data-edit-student="${esc(s.id)}" aria-label="Edit ${esc(s.name)}">${icon('edit','tiny')}</button></div><div class="student-sub">${s.done} of ${s.count} lessons done</div></div><div class="student-money">${money(s.earned)}<span>${money(s.projected)} possible</span></div></div>`).join(''):`<div class="muted" style="padding:30px 0">No students added yet.</div>`}</div><div class="progress-line"><div style="width:${list.length?stats(list).doneHours/Math.max(1,stats(list).hours)*100:0}%"></div></div><div class="progress-text"><span>Monthly progress</span><span>${list.length?Math.round(stats(list).doneHours/Math.max(1,stats(list).hours)*100):0}% complete</span></div></div>`;}
+  function weeklyBanner(){return `<div class="sync-banner"><div class="sync-logo">${icon('calendar')}</div><div class="sync-body"><strong>Your weekly timetable is ready</strong><span>${db.recurringRules.filter(r=>r.active!==false).length} lessons in your weekly pattern, repeating automatically. Tick off or reschedule any session independently.</span></div><button class="btn sync-button" data-action="open-settings">Edit timetable ${icon('right','small')}</button></div>`;}
+  function overviewHtml(){let list=lessonsInMonth(selectedMonth),s=stats(list),yearMonths=Array.from({length:12},(_,i)=>monthDate(selectedMonth.getFullYear(),selectedMonth.getMonth()-(11-i))),year=stats(yearMonths.flatMap(lessonsInMonth));return `${weeklyBanner()}${metricsHtml(s)}<div class="split"><div class="card insight-card"><div class="panel-head"><div><div class="toolbar-title">Earnings over time</div><p class="toolbar-sub">12-month earned vs. planned income</p></div><span class="tag">12 months</span></div>${chartHtml(yearMonths)}<div class="year-total">${money(year.earned)} earned · ${money(year.projected)} possible in 12 months</div></div>${studentsPanel(list)}</div><div class="card month-breakdown"><div class="panel-head"><div><div class="toolbar-title">Monthly breakdown</div><p class="toolbar-sub">${esc(monthTitle(selectedMonth))} at a glance</p></div><span class="tag">${money(rate())}/hour</span></div><div class="breakdown-grid"><div><span>Hours taught</span><strong>${hoursLabel(s.doneHours)}</strong></div><div><span>Hours remaining</span><strong>${hoursLabel(s.remainingHours)}</strong></div><div><span>Sessions completed</span><strong>${s.done}</strong></div><div><span>Sessions planned</span><strong>${s.pending}</strong></div></div></div>`;}
+  function weekStart(dateStr){let d=dateAt(dateStr);let dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return iso(d);}
+  function timeLabel(l){if(!l.time)return 'Time not set';let [h,m]=l.time.split(':').map(Number),mins=h*60+m+Math.round(Number(l.hours)*60);return `${l.time}–${String(Math.floor(mins/60)%24).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;}
+  function lessonRow(l){let stud=studentById(l.studentId),date=dateAt(l.date),overdue=!l.completed&&date<today;return `<div class="lesson-row"><button class="check-btn ${l.completed?'checked':''}" data-toggle="${esc(l.id)}" title="${l.completed?'Mark incomplete':'Mark complete'}" aria-label="${l.completed?'Mark incomplete':'Mark complete'}: ${esc(stud.name)} on ${esc(l.date)}">${icon('check')}</button><div class="who">${avatar(stud)}<div class="student-name">${esc(stud.name)}</div></div><div><div class="date-main">${esc(weekday(l.date))}, ${esc(dayMonth(l.date))}</div><div class="date-sub">${esc(timeLabel(l))}</div></div><div class="duration-col hours">${hoursLabel(l.hours)}</div><div class="money">${money(Number(l.hours)*rate())}<div class="status-tag ${l.completed?'':'planned'} ${overdue?'overdue':''}">${l.completed?'Completed':overdue?'Not completed':'Planned'}</div></div><button class="more-btn" data-edit="${esc(l.id)}" aria-label="Edit lesson" title="Edit lesson">${icon('more')}</button></div>`;}
+  function sortedGroup(group,completed){return [...group].sort((a,b)=>{
+    if(sortMode==='student')return studentById(a.studentId).name.localeCompare(studentById(b.studentId).name)||sortLessons(a,b);
+    if(sortMode==='hours')return Number(b.hours)-Number(a.hours)||sortLessons(a,b);
+    if(sortMode==='value')return Number(b.hours)-Number(a.hours)||sortLessons(a,b);
+    if(sortMode==='newest')return sortLessons(b,a);
+    if(sortMode==='oldest')return sortLessons(a,b);
+    return completed?sortLessons(b,a):sortLessons(a,b);
+  });}
+  function lessonBox(title,subtitle,entries,completed){return `<section class="card lesson-box"><div class="lesson-box-header"><div><h2>${title} <span class="box-count">${entries.length}</span></h2><p>${subtitle}</p></div><span class="box-value">${money(totalHours(entries)*rate())}</span></div>${entries.length?sortedGroup(entries,completed).map(lessonRow).join(''):`<div class="empty-box">${completed?'Completed sessions move here as you tick them off.':'Nothing left to tick off for this month.'}</div>`}</section>`;}
+  // Each Monday–Sunday week belongs to exactly one month.
+  // Default: the month containing Thursday (the majority of days).
+  function weekOwner(start){return db.weekMonthOverrides?.[start] || monthKey(dateAt(addDays(start,3)));}
+  function boundaryWeek(start){return monthKey(dateAt(start))!==monthKey(dateAt(addDays(start,6)));}
+  function weeksOverlappingMonth(d){
+    const target=monthKey(d),first=iso(new Date(d.getFullYear(),d.getMonth(),1));
+    const end=iso(new Date(d.getFullYear(),d.getMonth()+1,0));
+    let cursor=addDays(weekStart(first),-7),mondays=[];
+    while(cursor<=addDays(end,7)){
+      if(weekOwner(cursor)===target)mondays.push({start:cursor,end:addDays(cursor,6)});
+      cursor=addDays(cursor,7);
+    }
+    return mondays;
+  }
+  function monthNameFromKey(key){return monthTitle(monthDate(Number(key.slice(0,4)),Number(key.slice(5,7))-1));}
+  function setWeekOwner(start,owner){
+    if(!boundaryWeek(start))return;
+    const options=[monthKey(dateAt(start)),monthKey(dateAt(addDays(start,6)))];
+    if(!options.includes(owner))return;
+    const defaultOwner=monthKey(dateAt(addDays(start,3)));
+    if(owner===defaultOwner)delete db.weekMonthOverrides[start];
+    else db.weekMonthOverrides[start]=owner;
+    closeModal();persist();toast(`Week of ${dayMonth(start)} assigned to ${monthNameFromKey(owner)}`);
+  }
+  function boundaryWeeksForMonth(d){
+    const first=iso(new Date(d.getFullYear(),d.getMonth(),1));
+    const last=iso(new Date(d.getFullYear(),d.getMonth()+1,0));
+    return [...new Set([weekStart(first),weekStart(last)])].filter(boundaryWeek);
+  }
+  function openWeekMonthManager(focusStart=null){
+    modalKind='week-month';
+    let weeks=boundaryWeeksForMonth(selectedMonth);
+    if(focusStart&&boundaryWeek(focusStart)&&!weeks.includes(focusStart))weeks.push(focusStart);
+    const rows=weeks.map(start=>{
+      const choices=[monthKey(dateAt(start)),monthKey(dateAt(addDays(start,6)))];
+      const owner=weekOwner(start);
+      return `<div class="boundary-week-row"><div class="boundary-week-title">${esc(dayMonth(start))} – ${esc(dayMonth(addDays(start,6)))}</div><div class="boundary-week-actions">${choices.map(key=>`<button type="button" class="boundary-month-btn ${owner===key?'selected':''}" data-assign-week="${esc(start)}" data-owner-month="${esc(key)}" aria-pressed="${owner===key}">${owner===key?icon('check','tiny'):''}${esc(monthNameFromKey(key))}</button>`).join('')}</div></div>`;
+    }).join('');
+    modalFrame('Organise weeks by month','Choose which month each boundary week belongs to.',`<div class="notice" style="margin-bottom:14px">${icon('info','small')}<span>Each week appears in one month only. Week numbers update automatically. Lesson dates, completion and Overview earnings stay unchanged.</span></div>${rows || '<p>No boundary weeks for this month.</p>'}`,`<span class="muted">Saved automatically</span><button class="btn primary" data-action="close-modal">Done</button>`);
+  }
+  const displayWeek=l=>/^\d{4}-\d{2}-\d{2}$/.test(l.displayWeekStart||'')&&weekStart(l.displayWeekStart)===l.displayWeekStart?l.displayWeekStart:weekStart(l.date);
+  function placeInWeek(id,week){
+    let l=lessonById(id);
+    if(!l||!/^\d{4}-\d{2}-\d{2}$/.test(week)||weekStart(week)!==week){toast('Invalid week');return;}
+    if(displayWeek(l)===week){toast('Lesson is already shown in that week');return;}
+    const saved={...l};
+    if(week===weekStart(l.date))delete saved.displayWeekStart;
+    else saved.displayWeekStart=week;
+    saveOccurrence(saved);persist();
+    toast(`${studentById(l.studentId).name} pinned to the week of ${dayMonth(week)} — lesson date unchanged`);
+  }
+  function resetDisplayWeek(id){const l=lessonById(id);if(!l)return;saveOccurrence({...l,displayWeekStart:null});persist();toast('Lesson returned to its date-based week');}
+  function weeklyBoardLessons(d){
+    let weeks=weeksOverlappingMonth(d);
+    if(!weeks.length)return [];
+    let first=weeks[0].start,last=weeks[weeks.length-1].end;
+    // Load lessons from all months touched by the displayed week columns.
+    // Collecting adjacent months also handles recurring lessons and saved
+    // one-off edits that land on the other side of a month boundary.
+    let startD=dateAt(first),endD=dateAt(last),sources=[];
+    for(let cursor=monthDate(startD.getFullYear(),startD.getMonth());cursor<=endD;cursor=monthDate(cursor.getFullYear(),cursor.getMonth()+1)){
+      sources.push(lessonsInMonth(cursor));
+    }
+    const pinned=db.lessons.filter(l=>!l.deleted && l.displayWeekStart>=first && l.displayWeekStart<=last);
+    return [...new Map([...sources.flat(),...pinned].filter(l=>!l.deleted&&((l.date>=first&&l.date<=last)||(l.displayWeekStart>=first&&l.displayWeekStart<=last))).map(l=>[l.id,l])).values()].sort(sortLessons);
+  }
+  function dayTask(l){
+    const stud=studentById(l.studentId),colors=studentPalette[stud.color]||studentPalette.slate;
+    const detail=weekday(l.date)+' '+dayMonth(l.date)+(l.time?' · '+l.time:'')+' · '+hoursLabel(l.hours);
+    return `<div class="day-task ${l.completed?'done':''}" data-lesson-id="${esc(l.id)}" style="--student-bg:${colors[0]};--student-ink:${colors[1]}" title="Drag to a day to reschedule, or to another week header to keep the real date"><button type="button" class="check-btn ${l.completed?'checked':''}" data-toggle="${esc(l.id)}" aria-label="${l.completed?'Mark incomplete':'Mark complete'}: ${esc(stud.name)} on ${esc(l.date)}" title="${l.completed?'Mark incomplete':'Mark complete'}">${icon('check')}</button><span class="day-task-main"><span class="day-task-name">${esc(stud.name)}</span><span class="day-task-detail">${esc(detail)}${l.displayWeekStart&&l.displayWeekStart!==weekStart(l.date)?' · pinned':''}</span></span><button type="button" class="day-task-move" data-quick-move="${esc(l.id)}" aria-label="Move ${esc(stud.name)} on ${esc(l.date)}" title="Drag to reschedule or click to choose date">${icon('grip','small')}</button><button type="button" class="day-task-edit" data-edit="${esc(l.id)}" aria-label="Edit ${esc(stud.name)} lesson" title="Edit lesson">${icon('more','small')}</button></div>`;
+  }
+  const WEEKDAY_NAMES=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  function daySlot(date,entries){
+    const d=dateAt(date),offMonth=monthKey(d)!==monthKey(selectedMonth),isToday=iso(today)===date;
+    const label=WEEKDAY_NAMES[(d.getDay()+6)%7]+' '+d.getDate()+(offMonth?' '+d.toLocaleDateString('en-GB',{month:'short'}):'');
+    const todo=sortedGroup(entries.filter(l=>!l.completed),false),done=sortedGroup(entries.filter(l=>l.completed),true);
+    return `<div class="week-day-slot ${offMonth?'adjacent-day':''} ${isToday?'today-slot':''}" data-drop-date="${esc(date)}" aria-label="${esc(label)}, ${entries.length} lessons. Drop a lesson here to move it to this date."><div class="week-day-heading"><span>${esc(label)}</span>${entries.length?`<span class="day-count">${done.length}/${entries.length}</span>`:''}<button type="button" class="day-add" data-add-date="${esc(date)}" aria-label="Add lesson on ${esc(date)}" title="Add lesson">${icon('plus','tiny')}</button></div><div class="week-day-items">${[...todo,...done].map(dayTask).join('')}${entries.length?'':'<span class="day-drop-hint">Drop here</span>'}</div></div>`;
+  }
+  function weekColumn(w,i,entries){
+    const s=stats(entries),current=iso(today)>=w.start&&iso(today)<=w.end;
+    const startLabel=dayMonth(w.start),endLabel=dayMonth(w.end);
+    const carried=entries.filter(l=>weekStart(l.date)!==w.start);
+    const slots=Array.from({length:7},(_,offset)=>{
+      let day=addDays(w.start,offset);
+      return daySlot(day,entries.filter(l=>l.date===day));
+    }).join('');
+    const carryHtml=carried.length?`<div class="week-carried"><div class="carried-label">Kept in this week <span>${carried.length}</span></div>${sortedGroup(carried,false).map(dayTask).join('')}</div>`:'';
+    return `<section data-drop-week="${esc(w.start)}" class="week-column ${current?'current-week':''}" aria-label="Week ${i+1}, ${esc(startLabel)} to ${esc(endLabel)}"><header class="week-card-top" data-drop-week="${esc(w.start)}" title="Drop a lesson here to keep it in this week without changing its date"><div class="week-title-line"><span class="week-number">Week ${i+1}</span><span class="week-title-actions">${boundaryWeek(w.start)?`<button type="button" class="week-month-menu" data-manage-week="${esc(w.start)}" title="Choose which month this week belongs to" aria-label="Change month for week of ${esc(startLabel)}">${icon('more','small')}</button>`:''}<span class="week-progress-badge ${entries.length&&s.pending===0?'all-done':''}">${s.done}/${s.count} taught</span></span></div><div class="week-dates">${esc(startLabel)} – ${esc(endLabel)}</div><div class="week-money"><strong>${money(s.earned)}</strong><span>of ${money(s.projected)}</span></div><div class="week-progress-track" aria-label="${s.count?Math.round(s.done/s.count*100):0}% completed"><span style="width:${s.count?s.done/s.count*100:0}%"></span></div></header><div class="week-keep-zone" data-drop-week="${esc(w.start)}" tabindex="0" aria-label="Drop lesson here to display in Week ${i+1} without changing its date">${icon('grip','tiny')} Drop to keep in Week ${i+1} <span>date stays the same</span></div><div class="week-days">${carryHtml}${slots}</div><footer class="week-card-foot"><span>${hoursLabel(s.hours)} scheduled</span><b>${money(s.projected-s.earned)} to earn</b></footer></section>`;
+  }
+  function weeklyBoard(list){
+    const weeks=weeksOverlappingMonth(selectedMonth),columns=weeks.map((w,i)=>weekColumn(w,i,list.filter(l=>displayWeek(l)===w.start)));
+    const s=stats(list),width=weeks.length*224+(weeks.length-1)*13;
+    return `<div class="week-intro"><div class="week-intro-copy"><h2>${esc(monthTitle(selectedMonth))} · Week by week</h2><span class="week-intro-note">Drag to a day to reschedule, or to a week header to keep the date</span></div><div class="week-intro-controls"><button class="btn week-month-control" data-action="manage-month-weeks">${icon('calendar','tiny')} Organise weeks</button><span class="month-stats">${s.done} of ${s.count} taught</span></div></div><div class="week-board-scroll" role="region" aria-label="Weekly lessons for ${esc(monthTitle(selectedMonth))}" tabindex="0"><div class="week-board" style="grid-template-columns:repeat(${weeks.length},minmax(0,1fr));min-width:max(100%, ${width}px)">${columns.join('')}</div></div><p class="week-board-help">Drag onto a <b>day slot</b> to change the lesson date. Drop onto another <b>week header or keep zone</b> to display it in that week while preserving its real date. Tap ${icon('grip','tiny')} for a mobile-friendly move option or to restore automatic placement. Completion and earnings always use the lesson's real date.</p>`;
+  }
+  function lessonPanel(list){
+    // Calendar shows the selected calendar month. List shows weeks assigned to it.
+    let visible=view==='list'?weeklyBoardLessons(selectedMonth):list;
+    if(studentFilter!=='all')visible=visible.filter(l=>l.studentId===studentFilter);
+    if(search.trim()){let q=search.trim().toLowerCase();visible=visible.filter(l=>studentById(l.studentId).name.toLowerCase().includes(q)||l.date.includes(q)||(l.notes||'').toLowerCase().includes(q));}
+    return `<div class="lesson-page-toolbar"><div class="lesson-page-desc"><strong>${visible.length} sessions</strong> · ${hoursLabel(totalHours(visible))} booked</div><div class="lesson-toolbar-actions"><button class="btn light-add" data-action="add-lesson">${icon('plus','small')} Add lesson</button><div class="pill-tabs"><button data-view="list" class="${view==='list'?'sel':''}">List</button><button data-view="calendar" class="${view==='calendar'?'sel':''}">Calendar</button></div></div></div><div class="lesson-filters"><label class="search-input">${icon('search','small')}<input id="lesson-search" placeholder="Search lessons" value="${esc(search)}" autocomplete="off" aria-label="Search lessons" /></label><select class="filter-select" id="student-filter" aria-label="Filter by student"><option value="all">All students</option>${db.students.map(s=>`<option value="${esc(s.id)}" ${studentFilter===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select>${view==='list'?`<label class="sort-wrap">Sort within days <select id="lesson-sort" class="filter-select" aria-label="Sort lessons"><option value="smart" ${sortMode==='smart'?'selected':''}>Default order</option><option value="oldest" ${sortMode==='oldest'?'selected':''}>Date: oldest first</option><option value="newest" ${sortMode==='newest'?'selected':''}>Date: newest first</option><option value="student" ${sortMode==='student'?'selected':''}>Student A–Z</option><option value="hours" ${sortMode==='hours'?'selected':''}>Longest first</option><option value="value" ${sortMode==='value'?'selected':''}>Highest value first</option></select></label>`:''}</div>${view==='calendar'?`<div class="card lesson-panel">${calendarHtml(visible)}</div>`:weeklyBoard(visible)}`;
+  }
+  function emptyLessons(context){return `<div class="empty"><div class="empty-icon">${icon('calendar')}</div><h3>No lessons here yet</h3><p>${context==='overview'?'A fresh month, a fresh start. Add your next lesson to begin tracking earnings.':'Try adjusting your filters, or schedule a new tutoring session.'}</p><button class="btn primary" data-action="add-lesson">${icon('plus','small')} Add lesson</button></div>`;}
+  function calendarHtml(list){let first=new Date(selectedMonth.getFullYear(),selectedMonth.getMonth(),1),offset=(first.getDay()+6)%7,begin=new Date(first);begin.setDate(begin.getDate()-offset);let cells=Math.ceil((offset+new Date(selectedMonth.getFullYear(),selectedMonth.getMonth()+1,0).getDate())/7)*7;let byDate=new Map();for(let l of list){if(!byDate.has(l.date))byDate.set(l.date,[]);byDate.get(l.date).push(l);}return `<div class="calendar"><div class="calendar-legend">${db.students.filter(s=>s.active||list.some(l=>l.studentId===s.id)).map(s=>`<span class="legend-student"><i style="background:${(studentPalette[s.color]||studentPalette.slate)[1]}"></i>${esc(s.name)}</span>`).join('')}</div><div class="calendar-grid">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<div class="day-head">${x}</div>`).join('')}${Array.from({length:cells},(_,i)=>{let d=new Date(begin);d.setDate(d.getDate()+i);let key=iso(d),items=byDate.get(key)||[],same=d.getMonth()===selectedMonth.getMonth();return `<div class="day-box ${same?'':'muted-day'} ${key===iso(today)?'today':''}"><div class="day-number">${d.getDate()}${same?`<button class="day-plus" title="Add lesson for ${key}" data-add-date="${key}">${icon('plus','tiny')}</button>`:''}</div>${items.slice(0,3).map(l=>`<button class="cal-lesson ${l.completed?'done':''}" style="--student-bg:${(studentPalette[studentById(l.studentId).color]||studentPalette.slate)[0]};--student-ink:${(studentPalette[studentById(l.studentId).color]||studentPalette.slate)[1]}" data-edit="${esc(l.id)}" title="${esc(studentById(l.studentId).name)} · ${esc(timeLabel(l))}"><span class="cal-name">${esc(studentById(l.studentId).name)} ${l.time?esc(l.time):''}</span>${l.completed?'<span class="cal-check" aria-label="completed">✓</span>':''}</button>`).join('')}${items.length>3?`<div class="cal-more">+${items.length-3} more</div>`:''}</div>`}).join('')}</div></div>`;}
+  function lessonsHtml(){return lessonPanel(lessonsInMonth(selectedMonth));}
+  function studentsHtml(){let all=db.students,month=lessonsInMonth(selectedMonth);return `<div class="section-heading" style="margin-top:0"><div><h2>Your students <span class="muted" style="font-weight:500">(${all.filter(s=>s.active).length} active)</span></h2><p>Students stay connected to their past lessons, even if archived.</p></div><button class="btn" data-action="add-student">${icon('plus','small')} Add student</button></div>${all.length?`<div class="student-grid">${all.map(s=>{let sessions=db.lessons.filter(l=>l.studentId===s.id),m=month.filter(l=>l.studentId===s.id);return `<div class="card student-card"><div class="student-card-top">${avatar(s)}<button class="more-btn" data-edit-student="${esc(s.id)}" title="Edit student">${icon('more')}</button></div><h3>${esc(s.name)}</h3><p>${sessions.length} lifetime lessons · ${m.length} this month</p><div class="student-card-foot"><div>${s.active?'<span class="tag">Active</span>':'<span class="tag archive">Archived</span>'}</div><div><b>${money(stats(sessions).earned)}</b><span style="font-size:10px;color:#a2aab5;display:block;text-align:right;margin-top:3px">earned to date</span></div></div></div>`;}).join('')}</div>`:`<div class="card">${emptyLessons('students')}</div>`}<div class="mini-banner" style="margin-top:24px"><div><strong>Want to add another student?</strong><span>Every lesson will be added to their history and your monthly earnings.</span></div><button class="btn blue" data-action="add-student">${icon('plus','small')} Add student</button></div>`;}
+  function reportsHtml(){let monthly=lessonsInMonth(selectedMonth),s=stats(monthly),yearMonths=Array.from({length:12},(_,i)=>monthDate(selectedMonth.getFullYear(),selectedMonth.getMonth()-(11-i))),yearAll=yearMonths.flatMap(lessonsInMonth),year=stats(yearAll),per=studentsSummary(monthly);return `${metricsHtml(s)}<div class="report-grid"><section class="card report-section"><h2 class="report-title">Year at a glance</h2><p class="report-sub">The 12 months up to ${esc(monthTitle(selectedMonth))}</p>${chartHtml(yearMonths)}<div class="year-total">${money(year.earned)} earned · ${money(year.projected)} potential · ${year.done} completed lessons</div></section><section class="card report-section"><h2 class="report-title">Monthly breakdown</h2><p class="report-sub">${esc(monthTitle(selectedMonth))}</p><div style="margin-top:17px">${[['Lessons completed',s.done],['Lessons still planned',s.pending],['Hours taught',hoursLabel(s.doneHours)],['Total booked hours',hoursLabel(s.hours)],['Standard hourly rate',money(rate())],['Earned',money(s.earned)],['Potential total',money(s.projected)]].map(([label,value])=>`<div class="report-row"><span class="left">${label}</span><b>${value}</b></div>`).join('')}</div></section></div><div class="section-heading"><div><h2>Income by student</h2><p>See how each student's lessons contribute to your monthly total.</p></div></div><div class="card insight-card">${per.map(x=>`<div class="report-student"><div class="report-student-label"><b>${esc(x.name)}</b><span>${money(x.earned)} earned · ${money(x.projected)} potential</span></div><div class="report-progress"><div style="width:${s.projected?x.projected/s.projected*100:0}%"></div></div></div>`).join('')||'<div class="muted">No lessons booked in this month.</div>'}</div>`;}
+  function settingsHtml(){return `<div class="settings-grid">
+    <section class="card settings-card timetable-settings"><h3>${icon('calendar','small')} Weekly timetable</h3><p>This timetable repeats every week from Monday 19 October 2026, including future months and years. You can edit a single occurrence in Lessons without changing the whole series, or edit the weekly pattern below.</p>
+      <div class="weekly-settings-list">${[...db.recurringRules].sort((a,b)=>a.weekday-b.weekday).map(r=>`<div class="weekly-rule"><div class="weekly-rule-person">${avatar(studentById(r.studentId))}<div><strong>${esc(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][r.weekday])} · ${esc(studentById(r.studentId).name)}</strong><span>${hoursLabel(r.hours)} ${r.time?'· '+esc(r.time):'· Time not set'}${r.active===false?' · Paused':''}</span></div></div><button type="button" class="mini-add" data-edit-rule="${esc(r.id)}">Edit</button></div>`).join('')}</div>
+      <button class="btn" data-action="add-rule" style="margin-top:16px">${icon('plus','small')} Add weekly lesson</button><div class="notice" style="margin-top:15px">${icon('info','small')}<span>Changes to a weekly rule affect its automatically generated lessons. Previously completed or individually edited lessons remain saved.</span></div>
+    </section>
+    <section class="card settings-card"><h3>Hourly rate</h3><p>Adjust the amount you charge. Updating it recalculates earnings for all months.</p><form id="rate-form"><div class="field"><label for="hourly-rate">Rate per hour (£)</label><input id="hourly-rate" type="number" step="0.5" min="0.5" max="10000" value="${esc(db.hourlyRate)}" required /></div><div style="margin-top:19px"><button type="submit" class="btn primary">Save rate</button></div></form></section>
+    <section class="card settings-card"><h3>Back up your data</h3><p>Lessons and checkmarks save in this browser. Export a backup before changing devices or clearing browser storage.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-action="export">${icon('download','small')} Export JSON</button><button class="btn" data-action="import">${icon('upload','small')} Import backup</button></div><div class="notice" style="margin-top:20px">${icon('info','small')}<span>Your data is saved locally, not synced across devices. Import a backup to restore your lessons and repeating timetable.</span></div></section>
+    <section class="card settings-card"><h3>October 2026 screenshot records</h3><p>The 26 October screenshot contains 21 lessons, with 13 already completed. New installations include these automatically. If this browser holds older records, you can selectively replace October after exporting a backup.</p><button class="btn" data-action="load-snapshot">${icon('refresh','small')} Restore October screenshot</button></section>
+    <section class="card settings-card"><h3>Student management</h3><p>Edit students and their colours.</p>${db.students.map(s=>`<div class="settings-student-row">${avatar(s)} <b>${esc(s.name)}</b><button class="mini-add" data-edit-student="${esc(s.id)}">Edit</button></div>`).join('')}<button class="btn" data-action="add-student" style="margin-top:14px">${icon('plus','small')} Add student</button></section></div>`;}
+  function openSettings(){modalKind='settings';modalFrame('Settings','Weekly timetable, students & business preferences.',settingsHtml(),`<span class="muted">Saved on this browser</span><button class="btn primary" data-action="close-modal">Done</button>`);}
+  function render(){document.title=`${page[0].toUpperCase()+page.slice(1)} · Lesson Studio`;$('#topbar').innerHTML=topbar();$('#content').innerHTML=(page==='lessons'?lessonsHtml:overviewHtml)();$('#foot-rate').textContent=money(rate());}
+  function makeId(){return 'l_'+(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2));}
+  function modalFrame(title,sub,body,actions){$('#modal-root').innerHTML=`<div class="modal-backdrop" id="modal-overlay"><div class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-header"><div><h2>${esc(title)}</h2><p>${esc(sub)}</p></div><button class="modal-close" data-action="close-modal" aria-label="Close">${icon('close','small')}</button></div><div class="modal-body">${body}</div><div class="modal-actions">${actions}</div></div></div>`;let first=$('#modal-root input:not([type=checkbox]),#modal-root select');if(first)first.focus();}
+  function closeModal(){modalKind=null;$('#modal-root').innerHTML='';}
+  function openLesson(id=null,preferredDate=null){
+    let existing=id?lessonById(id):null;
+    let l=existing||{studentId:db.students.find(s=>s.active)?.id||'',date:preferredDate||((monthKey(selectedMonth)===monthKey(today))?iso(today):iso(selectedMonth)),time:'',hours:1,completed:false,notes:''};
+    if(!db.students.length){toast('Add a student before scheduling a lesson.');openStudent();return;}
+    modalKind='lesson';
+    let recurring=!!existing?.ruleId;
+    const body=`<form id="lesson-form">${recurring?`<div class="notice" style="margin-bottom:18px">${icon('info','small')}<span>This is a repeating lesson. Your edits affect <b>this date only</b>. Change the weekly pattern in Settings.</span></div>`:''}
+      <div class="form-grid"><div class="field full"><label for="f-student">Student</label><select id="f-student" required>${db.students.map(s=>`<option value="${esc(s.id)}" ${s.id===l.studentId?'selected':''}>${esc(s.name)}${s.active?'':' (archived)'}</option>`).join('')}</select></div>
+      <div class="field"><label for="f-date">Lesson date</label><input type="date" id="f-date" required value="${esc(l.date)}" /></div>
+      <div class="field"><label for="f-time">Start time</label><input type="time" id="f-time" value="${esc(l.time)}" /><span class="field-hint">Optional</span></div>
+      <div class="field"><label for="f-hours">Duration (hours)</label><input type="number" id="f-hours" step="0.25" min="0.25" max="24" value="${esc(l.hours)}" required /></div>
+      <div class="field"><label for="f-status">Status</label><select id="f-status"><option value="planned" ${l.completed?'':'selected'}>Planned</option><option value="completed" ${l.completed?'selected':''}>Completed</option></select></div>
+      <div class="field full"><label for="f-notes">Notes (optional)</label><textarea id="f-notes" placeholder="Topics covered, homework, etc.">${esc(l.notes||'')}</textarea></div>
+      ${!existing?`<div class="field full"><label class="toggle-row"><input type="checkbox" id="f-repeat" /> Repeat for a few weeks</label><div id="repeat-options" style="display:none;margin-top:6px"><select id="f-weeks" aria-label="Number of weekly occurrences"><option value="2">2 weeks total</option><option value="4" selected>4 weeks total</option><option value="8">8 weeks total</option><option value="12">12 weeks total</option></select><div class="field-hint">For an indefinitely repeating schedule, edit the weekly timetable in Settings.</div></div></div>`:''}</div></form>`;
+    const actions=`${existing?`<button class="btn danger" data-delete-lesson="${esc(existing.id)}">${icon('trash','small')} Delete</button>`:'<span></span>'}<div style="display:flex;gap:9px"><button class="btn" data-action="close-modal">Cancel</button><button class="btn primary" type="submit" form="lesson-form">${existing?'Save changes':'Add lesson'}</button></div>`;
+    modalFrame(existing?'Edit lesson':'New lesson',existing?'Update this session independently.':'Add a lesson to your calendar.',body,actions);
+    if(!existing)$('#f-repeat').addEventListener('change',e=>{$('#repeat-options').style.display=e.target.checked?'block':'none';});
+    $('#lesson-form').addEventListener('submit',e=>{
+      e.preventDefault();const studentId=$('#f-student').value,date=$('#f-date').value,time=$('#f-time').value,hours=Number($('#f-hours').value),completed=$('#f-status').value==='completed',notes=$('#f-notes').value.trim();
+      if(!studentId||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(hours)||hours<.25||hours>24){alert('Please enter a valid student, date, and duration.');return;}
+      if(dateAt(date).getDate()!==Number(date.slice(8))){alert('Invalid lesson date.');return;}
+      if(existing){saveOccurrence({...existing,studentId,date,time,hours,completed,notes,displayWeekStart:date!==existing.date?null:existing.displayWeekStart});}
+      else{let n=$('#f-repeat')?.checked?Number($('#f-weeks').value):1;for(let i=0;i<n;i++)db.lessons.push({id:makeId(),studentId,date:addDays(date,7*i),time,hours,completed,notes});}
+      selectedMonth=monthDate(Number(date.slice(0,4)),Number(date.slice(5,7))-1);closeModal();persist();toast(existing?'Lesson updated':'Lesson saved');
+    });
+  }
+  // A generated recurring occurrence keeps its original ID and originalDate
+  // when moved, so the rest of the weekly pattern is unaffected.
+  function moveLesson(id,newDate){
+    const l=lessonById(id);
+    if(!l||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(newDate)||iso(dateAt(newDate))!==newDate){toast('Please choose a valid date');return;}
+    if(l.date===newDate){toast('Lesson already on that day');return;}
+    saveOccurrence({...l,date:newDate,displayWeekStart:null});
+    persist();
+    toast(`${studentById(l.studentId).name} moved to ${weekday(newDate)} ${dayMonth(newDate)}`);
+  }
+  function openMoveLesson(id){
+    const l=lessonById(id);if(!l)return;
+    const stud=studentById(l.studentId),mon=weekStart(l.date);
+    modalKind='move';
+    const neighborWeeks=[-1,0,1].map(x=>addDays(weekStart(l.date),x*7));
+    const pinnedOptions=`<div class="field"><label>Show in a different week (keep real date)</label><div class="week-choice-grid">${neighborWeeks.map(w=>`<button type="button" class="week-choice ${displayWeek(l)===w?'active':''}" data-pin-week="${esc(w)}" data-pin-id="${esc(id)}">Week of ${esc(dayMonth(w))}</button>`).join('')}</div>${l.displayWeekStart?`<button class="reset-week" data-reset-week="${esc(id)}">Reset to automatic week</button>`:''}<p class="field-hint">Changes the List view only. The lesson date stays ${esc(dayMonth(l.date))}.</p></div>`;
+    const body=`<div class="notice" style="margin-bottom:16px">${icon('info','small')}<span>Moving a repeating lesson changes <b>this lesson only</b>, not the weekly timetable.</span></div><div class="field"><label>Choose a day this week</label><div class="move-day-options">${Array.from({length:7},(_,i)=>{const date=addDays(mon,i);return `<button type="button" class="move-day-choice ${date===l.date?'selected':''}" data-move-to="${esc(date)}" data-move-id="${esc(id)}"><small>${WEEKDAY_NAMES[i]}</small>${dateAt(date).getDate()}</button>`;}).join('')}</div></div>${pinnedOptions}<form id="quick-move-form"><div class="field"><label for="quick-move-date">Or change its actual date</label><input type="date" id="quick-move-date" required value="${esc(l.date)}" /></div></form>`;
+    modalFrame('Move lesson',`${stud.name} · ${dayMonth(l.date)}`,body,`<span></span><div style="display:flex;gap:9px"><button type="button" class="btn" data-action="close-modal">Cancel</button><button type="submit" class="btn primary" form="quick-move-form">Move lesson</button></div>`);
+    $('#quick-move-form').addEventListener('submit',e=>{e.preventDefault();const date=$('#quick-move-date').value;closeModal();moveLesson(id,date);});
+  }
+  // Pointer Events allow the same direct drag gesture on mouse, trackpad and
+  // touchscreens; touching the move handle doesn't interfere with scrolling.
+  let dragging=null,ignoreNextMoveClick=false;
+  function dragTarget(x,y){return document.elementFromPoint(x,y)?.closest('[data-drop-date], [data-drop-week]')||null;}
+  function dragClear(){
+    if(!dragging)return;
+    dragging.ghost?.remove();dragging.hover?.classList.remove('drop-hover');
+    dragging.card?.classList.remove('drag-origin');document.body.classList.remove('dragging-lesson');
+    dragging=null;
+  }
+  document.addEventListener('pointerdown',e=>{
+    ignoreNextMoveClick=false;
+    if(page!=='lessons'||view!=='list'||e.button!==0||!e.isPrimary)return;
+    const handle=e.target.closest('[data-quick-move]');
+    const card=e.target.closest('.day-task');
+    if(!card||(!handle&&(e.pointerType==='touch'||e.target.closest('button'))))return;
+    dragging={id:card.dataset.lessonId,card,handle:!!handle,pointerId:e.pointerId,x:e.clientX,y:e.clientY,activated:false,hover:null,ghost:null};
+    try{card.setPointerCapture(e.pointerId);}catch(err){}
+  });
+  document.addEventListener('pointermove',e=>{
+    const d=dragging;if(!d||e.pointerId!==d.pointerId)return;
+    if(!d.activated){if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<7)return;
+      d.activated=true;const rect=d.card.getBoundingClientRect();
+      d.width=rect.width;d.height=rect.height;
+      d.ghost=d.card.cloneNode(true);d.ghost.classList.add('drag-floating');
+      d.ghost.removeAttribute('data-lesson-id');d.ghost.style.width=rect.width+'px';
+      d.ghost.querySelectorAll('button').forEach(b=>b.tabIndex=-1);
+      document.body.appendChild(d.ghost);d.card.classList.add('drag-origin');document.body.classList.add('dragging-lesson');
+    }
+    e.preventDefault();
+    d.ghost.style.left=(e.clientX-29)+'px';d.ghost.style.top=(e.clientY-21)+'px';
+    const scroll=$('.week-board-scroll');
+    if(scroll){const r=scroll.getBoundingClientRect();if(e.clientY>r.top&&e.clientY<r.bottom){
+      if(e.clientX>r.right-42)scroll.scrollLeft+=19;
+      if(e.clientX<r.left+42)scroll.scrollLeft-=19;
+    }}
+    const target=dragTarget(e.clientX,e.clientY);
+    if(target!==d.hover){d.hover?.classList.remove('drop-hover');d.hover=target;d.hover?.classList.add('drop-hover');}
+  },{passive:false});
+  document.addEventListener('pointerup',e=>{
+    const d=dragging;if(!d||e.pointerId!==d.pointerId)return;
+    const target=d.activated?dragTarget(e.clientX,e.clientY):null;
+    const id=d.id,activated=d.activated;
+    dragClear();
+    if(activated){ignoreNextMoveClick=true;e.preventDefault();if(target?.dataset.dropDate)moveLesson(id,target.dataset.dropDate);else if(target?.dataset.dropWeek)placeInWeek(id,target.dataset.dropWeek);else toast('Drop onto a day to reschedule or a week header to organise');}
+  });
+  document.addEventListener('pointercancel',dragClear);
+  window.addEventListener('blur',dragClear);
+  function openRule(id=null){
+    let rule=id?db.recurringRules.find(r=>r.id===id):null;
+    modalKind='rule';let weekday=rule?.weekday??0;
+    const body=`<form id="rule-form"><div class="form-grid"><div class="field full"><label for="rule-student">Student</label><select id="rule-student" required>${db.students.map(s=>`<option value="${esc(s.id)}" ${s.id===(rule?.studentId||db.students[0].id)?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div><div class="field"><label for="rule-weekday">Every</label><select id="rule-weekday">${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map((day,i)=>`<option value="${i}" ${i===weekday?'selected':''}>${day}</option>`).join('')}</select></div><div class="field"><label for="rule-time">Start time</label><input id="rule-time" type="time" value="${esc(rule?.time||'')}" /><span class="field-hint">Optional</span></div><div class="field"><label for="rule-hours">Duration (hours)</label><input id="rule-hours" type="number" step="0.25" min="0.25" max="24" value="${rule?.hours||1}" required /></div><div class="field"><label for="rule-start">Repeat from</label><input type="date" id="rule-start" value="${esc(rule?.startDate||SERIES_START)}" required /></div><div class="field full"><label class="toggle-row"><input type="checkbox" id="rule-active" ${rule?.active!==false?'checked':''}/> Enabled</label></div></div></form>`;
+    let actions=`${rule?`<button class="btn danger" data-delete-rule="${esc(rule.id)}">${icon('trash','small')} Remove pattern</button>`:'<span></span>'}<div style="display:flex;gap:9px"><button class="btn" data-action="close-modal">Cancel</button><button class="btn primary" form="rule-form" type="submit">${rule?'Save pattern':'Add pattern'}</button></div>`;
+    modalFrame(rule?'Edit weekly lesson':'Add weekly lesson','Changes affect generated sessions; saved completions and individual edits stay intact.',body,actions);
+    $('#rule-form').addEventListener('submit',e=>{e.preventDefault();let obj={studentId:$('#rule-student').value,weekday:Number($('#rule-weekday').value),time:$('#rule-time').value,hours:Number($('#rule-hours').value),startDate:$('#rule-start').value,active:$('#rule-active').checked};if(!Number.isFinite(obj.hours)||obj.hours<.25||obj.hours>24||!/^\d{4}-\d{2}-\d{2}$/.test(obj.startDate)){alert('Please provide valid weekly lesson details.');return;}
+      if(rule)Object.assign(rule,obj);else db.recurringRules.push({id:'weekly_'+makeId(),...obj});closeModal();persist();toast(rule?'Weekly timetable updated':'Weekly lesson added');openSettings();
+    });
+  }
+  function openStudent(id=null){let s=id?db.students.find(x=>x.id===id):null;modalKind='student';const body=`<form id="student-form"><div class="form-grid"><div class="field full"><label for="f-name">Student name</label><input type="text" id="f-name" maxlength="80" placeholder="e.g. Aashraya" value="${s?esc(s.name):''}" required /></div><div class="field full"><label>Avatar colour</label><div class="color-options">${Object.keys(studentPalette).filter(x=>x!=='slate').map(c=>`<button type="button" class="color-option ${(s?.color||'blue')===c?'chosen':''}" data-color="${c}" style="background:${studentPalette[c][0]}" title="${c}" aria-label="Choose ${c}"></button>`).join('')}</div><input type="hidden" id="f-color" value="${esc(s?.color||'blue')}" /></div>${s?`<div class="field full"><label class="toggle-row"><input type="checkbox" id="f-active" ${s.active?'checked':''} /> Active student (untick to archive)</label><span class="field-hint">Archived students remain visible in old lessons and reports.</span></div>`:''}</div></form>`;modalFrame(s?'Edit student':'Add student',s?'Keep student details up to date.':'Make space for another learner.',body,`<span></span><div style="display:flex;gap:9px"><button class="btn" data-action="close-modal">Cancel</button><button type="submit" form="student-form" class="btn primary">${s?'Save student':'Add student'}</button></div>`);document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-color]').forEach(el=>el.classList.remove('chosen'));btn.classList.add('chosen');$('#f-color').value=btn.dataset.color;}));$('#student-form').addEventListener('submit',e=>{e.preventDefault();let name=$('#f-name').value.trim(),color=$('#f-color').value,active=s?$('#f-active').checked:true;if(!name){alert('Please enter a name.');return;}if(s){Object.assign(s,{name,color,active});}else{db.students.push({id:'s_'+makeId(),name,color,active});}closeModal();persist();toast(s?'Student updated':'Student added');});}
+  function applyScreenshotSnapshot(){
+    if(!confirm('Replace lessons dated 1–31 October 2026 with the latest screenshot records? Your other months and student settings will stay as they are. Export a backup first if you made custom October changes.'))return;
+    const removeIds=new Set(screenshotLessons().map(l=>l.id));
+    db.lessons=db.lessons.filter(l=>!(l.date>='2026-10-01'&&l.date<='2026-10-31') && !removeIds.has(l.id));
+    db.lessons.push(...screenshotLessons());
+    persist();toast('October screenshot records restored');closeModal();
+  }
+  function exportData(){let json=JSON.stringify({app:'Lesson Studio',exportedAt:new Date().toISOString(),...db},null,2);let blob=new Blob([json],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='lesson-studio-backup-'+iso(today)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500);toast('Backup downloaded');}
+  function validImport(data){return data&&Array.isArray(data.students)&&Array.isArray(data.lessons)&&Number.isFinite(Number(data.hourlyRate))&&Number(data.hourlyRate)>0&&data.students.every(s=>typeof s.id==='string'&&typeof s.name==='string')&&data.lessons.every(l=>typeof l.id==='string'&&typeof l.studentId==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(l.date)&&Number(l.hours)>0&&Number(l.hours)<=24);}
+  function importData(event){let file=event.target.files[0];event.target.value='';if(!file)return;if(file.size>5*1024*1024){alert('That backup file is too large.');return;}let reader=new FileReader();reader.onload=()=>{try{
+    let data=JSON.parse(reader.result);if(!validImport(data))throw Error('Invalid backup structure');
+    if(!confirm('Import this backup? It will replace the current lessons, students, and weekly timetable in this browser.'))return;
+    db={version:Number(data.version)||2,hourlyRate:Number(data.hourlyRate),students:data.students.map(s=>({id:String(s.id),name:String(s.name).slice(0,80),color:studentPalette[s.color]?s.color:'blue',active:s.active!==false})),lessons:data.lessons.map(l=>({id:String(l.id),studentId:String(l.studentId),date:l.date,time:typeof l.time==='string'?l.time:'',hours:Number(l.hours),completed:l.completed===true,notes:typeof l.notes==='string'?l.notes.slice(0,2000):'',ruleId:typeof l.ruleId==='string'?l.ruleId:undefined,originalDate:typeof l.originalDate==='string'?l.originalDate:undefined,deleted:l.deleted===true,displayWeekStart:typeof l.displayWeekStart==='string'?l.displayWeekStart:null})),recurringRules:Array.isArray(data.recurringRules)?data.recurringRules.map(r=>({id:String(r.id),studentId:String(r.studentId),weekday:Number(r.weekday),time:String(r.time||''),hours:Number(r.hours)||1,startDate:String(r.startDate||SERIES_START),endDate:r.endDate,active:r.active!==false})):undefined,weekMonthOverrides:Object.fromEntries(Object.entries(data.weekMonthOverrides||{}).filter(([start,owner])=>/^\d{4}-\d{2}-\d{2}$/.test(start)&&/^\d{4}-\d{2}$/.test(owner)&&weekStart(start)===start&&[monthKey(dateAt(start)),monthKey(dateAt(addDays(start,6)))].includes(owner)))};
+    migrateData();persist();toast('Backup imported successfully');
+  }catch(err){alert('Could not import this file. Please select a valid Lesson Studio JSON backup.');console.error(err);}};reader.readAsText(file);}
+  document.addEventListener('click',e=>{
+    let nav=e.target.closest('[data-nav]');if(nav){goto(nav.dataset.nav);return;}
+    let change=e.target.closest('[data-month]');if(change){selectedMonth=monthDate(selectedMonth.getFullYear(),selectedMonth.getMonth()+Number(change.dataset.month));render();return;}
+    let act=e.target.closest('[data-action]');if(act){switch(act.dataset.action){case'add-lesson':openLesson();break;case'add-student':openStudent();break;case'close-modal':closeModal();break;case'go-lessons':goto('lessons');break;case'export':exportData();break;case'load-snapshot':applyScreenshotSnapshot();break;case'import':$('#import-file').click();break;case'open-settings':openSettings();break;case'manage-month-weeks':openWeekMonthManager();break;case'add-rule':openRule();break;}return;}
+    let manageWeek=e.target.closest('[data-manage-week]');if(manageWeek){openWeekMonthManager(manageWeek.dataset.manageWeek);return;}
+    let assigned=e.target.closest('[data-assign-week]');if(assigned){setWeekOwner(assigned.dataset.assignWeek,assigned.dataset.ownerMonth);return;}
+    let pin=e.target.closest('[data-pin-week]');if(pin){const id=pin.dataset.pinId,week=pin.dataset.pinWeek;closeModal();placeInWeek(id,week);return;}
+    let reset=e.target.closest('[data-reset-week]');if(reset){const id=reset.dataset.resetWeek;closeModal();resetDisplayWeek(id);return;}
+    let chosenDay=e.target.closest('[data-move-to]');if(chosenDay){const id=chosenDay.dataset.moveId,date=chosenDay.dataset.moveTo;closeModal();moveLesson(id,date);return;}
+    let quickMove=e.target.closest('[data-quick-move]');if(quickMove){if(ignoreNextMoveClick){ignoreNextMoveClick=false;return;}openMoveLesson(quickMove.dataset.quickMove);return;}
+    let toggle=e.target.closest('[data-toggle]');if(toggle){let l=lessonById(toggle.dataset.toggle);if(l){saveOccurrence({...l,completed:!l.completed});persist();toast(!l.completed?'Lesson marked completed':'Lesson marked planned');}return;}
+    let edit=e.target.closest('[data-edit]');if(edit){openLesson(edit.dataset.edit);return;}
+    let ruleEdit=e.target.closest('[data-edit-rule]');if(ruleEdit){openRule(ruleEdit.dataset.editRule);return;}
+    let ruleDelete=e.target.closest('[data-delete-rule]');if(ruleDelete){let r=db.recurringRules.find(x=>x.id===ruleDelete.dataset.deleteRule);if(r&&confirm('Remove this repeating weekly pattern? Individually edited and completed lessons will remain.')){db.recurringRules=db.recurringRules.filter(x=>x.id!==r.id);closeModal();persist();openSettings();toast('Weekly pattern removed');}return;}
+    let sed=e.target.closest('[data-edit-student]');if(sed){openStudent(sed.dataset.editStudent);return;}
+    let addDate=e.target.closest('[data-add-date]');if(addDate){openLesson(null,addDate.dataset.addDate);return;}
+    let del=e.target.closest('[data-delete-lesson]');if(del){let l=lessonById(del.dataset.deleteLesson);if(l&&confirm(`Delete the lesson for ${studentById(l.studentId).name} on ${dayMonth(l.date)}?`)){if(l.ruleId)saveOccurrence({...l,deleted:true});else db.lessons=db.lessons.filter(x=>x.id!==l.id);closeModal();persist();toast('Lesson deleted');}return;}
+    let v=e.target.closest('[data-view]');if(v){view=v.dataset.view;render();return;}
+    let f=e.target.closest('[data-filter]');if(f){filter=f.dataset.filter;render();return;}
+    if(e.target.id==='modal-overlay')closeModal();
+  });
+  document.addEventListener('change',e=>{if(e.target.id==='student-filter'){studentFilter=e.target.value;render();}if(e.target.id==='lesson-sort'){sortMode=e.target.value;render();}});
+  document.addEventListener('input',e=>{if(e.target.id==='lesson-search'){let pos=e.target.selectionStart;search=e.target.value;render();let el=$('#lesson-search');el.focus();el.setSelectionRange(pos,pos);}});
+  document.addEventListener('submit',e=>{if(e.target.id==='rate-form'){e.preventDefault();let r=Number($('#hourly-rate').value);if(r<=0||r>10000||!Number.isFinite(r))return;db.hourlyRate=r;persist();toast('Hourly rate updated');}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalKind)closeModal();});
+  $('#import-file').addEventListener('change',importData);
+  render();
+})();
+</script>
+</body>
+</html>
