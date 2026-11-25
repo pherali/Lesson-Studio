@@ -174,7 +174,7 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
 .boundary-month-btn.selected{background:#edf4ff;color:#245bc9;border-color:#86aaff}
 .boundary-month-btn:hover{border-color:#86aaff}
 @media(max-width:650px){.week-intro-controls{width:100%;justify-content:space-between}}
-</style>
+[hidden]{display:none!important} #cloud-bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e9ebef;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px} #cloud-status{font-size:12px;color:#647182} #login-screen{max-width:420px;margin:10vh auto;padding:28px} #login-screen .field{margin:14px 0} #login-msg{color:#b34242;white-space:pre-wrap;font-size:13px}</style>
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -204,7 +204,9 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M8 5h11v11"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.7 9A7.5 7.5 0 0 1 19 7l1 5M4 12l1 5a7.5 7.5 0 0 0 13.3-2"/></symbol>
   </svg>
-  <div class="app">
+  <section id="login-screen" class="card"><h1>Lesson Studio</h1><p>Sign in to your private tutoring workspace.</p><form id="cloud-login"><div class="field"><label for="cloud-email">Email</label><input id="cloud-email" type="email" autocomplete="username" required></div><div class="field"><label for="cloud-password">Password</label><input id="cloud-password" type="password" autocomplete="current-password" required></div><button class="btn primary" type="submit">Sign in</button></form><p id="login-msg" role="status"></p></section>
+  <div id="cloud-bar" hidden><span id="cloud-status" role="status">Connecting…</span><div><button class="btn" id="cloud-retry" hidden>Retry save</button> <button class="btn" id="cloud-logout">Sign out</button></div></div>
+  <div class="app" id="workspace" hidden>
     <aside class="sidebar">
       <div class="brand"><div class="brand-mark"><svg class="icon"><use href="#i-book" /></svg></div><div class="brand-text-wrap"><div class="brand-text">lesson studio<span style="color:#4672ec">.</span></div><div class="brand-sub">YOUR TUTORING SPACE</div></div></div>
       <div class="nav-label">Workspace</div>
@@ -213,98 +215,21 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
         <button class="nav-btn" data-nav="lessons"><svg class="icon"><use href="#i-calendar"/></svg><span>Lessons</span></button>
       </nav>
       <div class="nav-spacer"></div>
-      <div class="sidebar-foot"><div class="privacy-icon"><span class="privacy-dot"></span>Saved in your browser</div><div class="side-foot-note">Your changes save automatically. Open Settings to export a backup anytime.</div></div>
+      <div class="sidebar-foot"><div class="privacy-icon"><span class="privacy-dot"></span>Cloud account</div><div class="side-foot-note">Your changes save automatically. Open Settings to export a backup anytime.</div></div>
     </aside>
-    <main class="main"><header id="topbar"></header><div id="content"></div><div class="footer">Made for your tutoring business · <span id="foot-rate">£30</span>/hour · Progress saved locally</div></main>
+    <main class="main"><header id="topbar"></header><div id="content"></div><div class="footer">Made for your tutoring business · <span id="foot-rate">£30</span>/hour · Cloud storage</div></main>
   </div>
   <div id="modal-root"></div><div id="toast-root"></div><input type="file" id="import-file" accept="application/json,.json" style="display:none" />
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
   'use strict';
   const STORAGE_KEY='lesson_studio_v1';
-  const DEFAULT_STUDENTS=[
-    {id:'s_aashraya',name:'Aashraya',color:'lavender',active:true},
-    {id:'s_krisha',name:'Krisha',color:'peach',active:true},
-    {id:'s_shreesha',name:'Shreesha',color:'mint',active:true}
-  ];
-  // Historical lessons transcribed from the latest supplied Notes screenshot.
-  // The dates take precedence when handwritten weekday labels do not match.
-  const EXAMPLE_LESSONS=[
-    ['s_krisha','2026-10-03',true],['s_shreesha','2026-10-03',true],
-    ['s_aashraya','2026-10-06',true],['s_aashraya','2026-10-06',true],['s_aashraya','2026-10-07',true],
-    ['s_aashraya','2026-10-13',true],['s_aashraya','2026-10-15',true],['s_aashraya','2026-10-16',true],
-    ['s_krisha','2026-10-18',true],['s_shreesha','2026-10-18',true]
-  ].map((x,i)=>({id:'seed_'+(i<8?i+1:i+2),studentId:x[0],date:x[1],time:'',hours:1,completed:x[2],notes:''}));
   const SERIES_START='2026-10-19';
-  const DEFAULT_RULES=[
-    {id:'weekly_a_mon',studentId:'s_aashraya',weekday:0,time:'',hours:1,startDate:SERIES_START,active:true},
-    {id:'weekly_a_tue',studentId:'s_aashraya',weekday:1,time:'',hours:1,startDate:SERIES_START,active:true},
-    {id:'weekly_a_wed',studentId:'s_aashraya',weekday:2,time:'',hours:1,startDate:SERIES_START,active:true},
-    {id:'weekly_a_fri',studentId:'s_aashraya',weekday:4,time:'',hours:1,startDate:SERIES_START,active:true},
-    {id:'weekly_k_sat',studentId:'s_krisha',weekday:5,time:'',hours:1,startDate:SERIES_START,active:true},
-    {id:'weekly_s_sun',studentId:'s_shreesha',weekday:6,time:'',hours:1,startDate:SERIES_START,active:true}
-  ];
-  const SCREENSHOT_EXCEPTIONS=[
-    // These exceptions preserve the repeating rules for November onwards.
-    ['weekly_a_mon','2026-10-19','2026-10-23','s_aashraya',true,false],
-    ['weekly_a_tue','2026-10-20','2026-10-23','s_aashraya',true,false],
-    ['weekly_a_wed','2026-10-21','2026-10-24','s_aashraya',false,false],
-    ['weekly_a_fri','2026-10-23','2026-10-23','s_aashraya',false,true],
-    ['weekly_k_sat','2026-10-24','2026-10-24','s_krisha',false,true],
-    ['weekly_s_sun','2026-10-25','2026-10-25','s_shreesha',false,true],
-    ['weekly_s_sun','2026-11-01','2026-10-31','s_shreesha',false,false]
-  ].map(([ruleId,originalDate,date,studentId,completed,deleted])=>({id:'rec:'+ruleId+':'+originalDate,ruleId,originalDate,studentId,date,time:'',hours:1,completed,deleted,notes:''}));
-  const SCREENSHOT_ADDITIONS=[
-    {id:'snapshot_krisha_20261026',studentId:'s_krisha',date:'2026-10-26',time:'',hours:1,completed:true,notes:''},
-    {id:'snapshot_shreesha_20261027',studentId:'s_shreesha',date:'2026-10-27',time:'',hours:1,completed:false,notes:''}
-  ];
-  function screenshotLessons(){return [...structuredClone(EXAMPLE_LESSONS),...structuredClone(SCREENSHOT_EXCEPTIONS),...structuredClone(SCREENSHOT_ADDITIONS)];}
-  function defaults(){return {version:4,hourlyRate:30,students:structuredClone(DEFAULT_STUDENTS),lessons:screenshotLessons(),recurringRules:structuredClone(DEFAULT_RULES),weekMonthOverrides:{}};}
-  function readStore(){try{let raw=localStorage.getItem(STORAGE_KEY);if(!raw)return defaults();let data=JSON.parse(raw);if(!data||!Array.isArray(data.students)||!Array.isArray(data.lessons))throw Error('Invalid data');return data;}catch(err){console.error('Unable to read saved data',err);return defaults();}}
-  let db=readStore();
-  // Upgrade data saved by earlier versions on this same website/domain without losing edits.
-  function migrateData(){
-    db.recurringRules ||= structuredClone(DEFAULT_RULES);
-    db.lessons ||= [];
-    if(Number(db.version)<3){
-      // Imported Apple lessons become ordinary, editable, locally stored lessons.
-      for(let l of db.lessons){delete l.calendarKey;delete l.calendarSource;}
-      // Preserve any custom changes to the original seeded entries.
-      const friday16=db.lessons.find(l=>l.id==='seed_8');
-      if(friday16 && friday16.date==='2026-10-16'&&friday16.studentId==='s_aashraya')friday16.completed=true;
-      const extra=db.lessons.find(l=>l.id==='seed_9');
-      if(extra && extra.date==='2026-10-16'&&extra.studentId==='s_aashraya'&&extra.hours===1&&!extra.time&&!extra.notes){
-        db.lessons=db.lessons.filter(l=>l!==extra);
-      }
-      const oldSeeds=[
-        ['seed_12','weekly_a_mon','2026-10-19'],['seed_13','weekly_a_tue','2026-10-20'],
-        ['seed_14','weekly_a_wed','2026-10-21'],['seed_15','weekly_a_fri','2026-10-23'],
-        ['seed_16','weekly_k_sat','2026-10-24'],['seed_17','weekly_s_sun','2026-10-25']
-      ];
-      for(let [seedId,ruleId,originalDate] of oldSeeds){
-        let l=db.lessons.find(x=>x.id===seedId);
-        if(l){l.id='rec:'+ruleId+':'+originalDate;l.ruleId=ruleId;l.originalDate=originalDate;}
-      }
-      delete db.calendarUrl; delete db.lastCalendarSync;
-    }
-    if(Number(db.version)<4){
-      // Upgrade an untouched v6 starter dataset to the supplied 26 October
-      // screenshot. Never overwrite an edited calendar or personal entries.
-      const originalIds=new Set(['seed_1','seed_2','seed_3','seed_4','seed_5','seed_6','seed_7','seed_8','seed_10','seed_11']);
-      const octoberRecords=db.lessons.filter(l=>l.date?.startsWith('2026-10')||l.originalDate?.startsWith('2026-10'));
-      const pristine=octoberRecords.length===10 && octoberRecords.every(l=>originalIds.has(l.id)) && originalIds.size===octoberRecords.length &&
-        octoberRecords.every(l=>!l.ruleId&&!l.notes&&!l.time&&Number(l.hours)===1 && !l.deleted && !l.displayWeekStart) &&
-        db.recurringRules.length===DEFAULT_RULES.length && db.recurringRules.every(r=>DEFAULT_RULES.some(x=>x.id===r.id&&x.weekday===r.weekday&&x.studentId===r.studentId));
-      if(pristine){
-        const screenshotIds=new Set(screenshotLessons().map(l=>l.id));
-        db.lessons=db.lessons.filter(l=>!originalIds.has(l.id)&&!screenshotIds.has(l.id)).concat(screenshotLessons());
-      }
-    }
-    db.version=4;
-    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}catch(error){console.warn('Could not persist migrated data',error);}
-  }
-  migrateData();
+  function defaults(){return {version:4,hourlyRate:30,students:[],lessons:[],recurringRules:[],weekMonthOverrides:{}};}
+  let db=defaults();
+  function migrateData(){db.recurringRules ||= [];db.weekMonthOverrides ||= {};db.version=4;}
   const today = new Date();today.setHours(0,0,0,0);
   let selectedMonth=new Date(today.getFullYear(),today.getMonth(),1);
   let page='overview',view='list',filter='all',studentFilter='all',search='',sortMode='smart',modalKind=null,toastTimer;
@@ -353,7 +278,7 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
   const sortLessons=(a,b)=>a.date.localeCompare(b.date)||(a.time||'99:99').localeCompare(b.time||'99:99')||String(a.id).localeCompare(String(b.id));
   const totalHours=list=>list.reduce((a,l)=>a+Number(l.hours),0);
   function stats(list){const done=list.filter(l=>l.completed),remaining=list.filter(l=>!l.completed);return {count:list.length,done:done.length,pending:remaining.length,doneHours:totalHours(done),hours:totalHours(list),remainingHours:totalHours(remaining),earned:totalHours(done)*rate(),projected:totalHours(list)*rate()};}
-  function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(db));}catch(err){alert('Your browser could not save your changes. Please export a backup from Settings.');console.error(err);}render();}
+  function persist(){render();dirty=true;saveCloud();}
   function goto(p){page=p;document.querySelectorAll('[data-nav]').forEach(el=>el.classList.toggle('active',el.dataset.nav===p));window.scrollTo({top:0,behavior:'smooth'});render();}
   function toast(msg){clearTimeout(toastTimer);$('#toast-root').innerHTML=`<div class="toast" role="status">${icon('check','small')}${esc(msg)}</div>`;toastTimer=setTimeout(()=>$('#toast-root').innerHTML='',3300);}
   function topbar(){
@@ -491,10 +416,10 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
       <button class="btn" data-action="add-rule" style="margin-top:16px">${icon('plus','small')} Add weekly lesson</button><div class="notice" style="margin-top:15px">${icon('info','small')}<span>Changes to a weekly rule affect its automatically generated lessons. Previously completed or individually edited lessons remain saved.</span></div>
     </section>
     <section class="card settings-card"><h3>Hourly rate</h3><p>Adjust the amount you charge. Updating it recalculates earnings for all months.</p><form id="rate-form"><div class="field"><label for="hourly-rate">Rate per hour (£)</label><input id="hourly-rate" type="number" step="0.5" min="0.5" max="10000" value="${esc(db.hourlyRate)}" required /></div><div style="margin-top:19px"><button type="submit" class="btn primary">Save rate</button></div></form></section>
-    <section class="card settings-card"><h3>Back up your data</h3><p>Lessons and checkmarks save in this browser. Export a backup before changing devices or clearing browser storage.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-action="export">${icon('download','small')} Export JSON</button><button class="btn" data-action="import">${icon('upload','small')} Import backup</button></div><div class="notice" style="margin-top:20px">${icon('info','small')}<span>Your data is saved locally, not synced across devices. Import a backup to restore your lessons and repeating timetable.</span></div></section>
-    <section class="card settings-card"><h3>October 2026 screenshot records</h3><p>The 26 October screenshot contains 21 lessons, with 13 already completed. New installations include these automatically. If this browser holds older records, you can selectively replace October after exporting a backup.</p><button class="btn" data-action="load-snapshot">${icon('refresh','small')} Restore October screenshot</button></section>
+    <section class="card settings-card"><h3>Back up your data</h3><p>Lessons and checkmarks sync through your account. Export a backup periodically.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-action="export">${icon('download','small')} Export JSON</button><button class="btn" data-action="import">${icon('upload','small')} Import backup</button></div><div class="notice" style="margin-top:20px">${icon('info','small')}<span>Your data syncs across devices. Import a backup to restore your lessons and repeating timetable.</span></div></section>
+
     <section class="card settings-card"><h3>Student management</h3><p>Edit students and their colours.</p>${db.students.map(s=>`<div class="settings-student-row">${avatar(s)} <b>${esc(s.name)}</b><button class="mini-add" data-edit-student="${esc(s.id)}">Edit</button></div>`).join('')}<button class="btn" data-action="add-student" style="margin-top:14px">${icon('plus','small')} Add student</button></section></div>`;}
-  function openSettings(){modalKind='settings';modalFrame('Settings','Weekly timetable, students & business preferences.',settingsHtml(),`<span class="muted">Saved on this browser</span><button class="btn primary" data-action="close-modal">Done</button>`);}
+  function openSettings(){modalKind='settings';modalFrame('Settings','Weekly timetable, students & business preferences.',settingsHtml(),`<span class="muted">Saved to your account</span><button class="btn primary" data-action="close-modal">Done</button>`);}
   function render(){document.title=`${page[0].toUpperCase()+page.slice(1)} · Lesson Studio`;$('#topbar').innerHTML=topbar();$('#content').innerHTML=(page==='lessons'?lessonsHtml:overviewHtml)();$('#foot-rate').textContent=money(rate());}
   function makeId(){return 'l_'+(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2));}
   function modalFrame(title,sub,body,actions){$('#modal-root').innerHTML=`<div class="modal-backdrop" id="modal-overlay"><div class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="modal-header"><div><h2>${esc(title)}</h2><p>${esc(sub)}</p></div><button class="modal-close" data-action="close-modal" aria-label="Close">${icon('close','small')}</button></div><div class="modal-body">${body}</div><div class="modal-actions">${actions}</div></div></div>`;let first=$('#modal-root input:not([type=checkbox]),#modal-root select');if(first)first.focus();}
@@ -604,25 +529,18 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
     });
   }
   function openStudent(id=null){let s=id?db.students.find(x=>x.id===id):null;modalKind='student';const body=`<form id="student-form"><div class="form-grid"><div class="field full"><label for="f-name">Student name</label><input type="text" id="f-name" maxlength="80" placeholder="e.g. Aashraya" value="${s?esc(s.name):''}" required /></div><div class="field full"><label>Avatar colour</label><div class="color-options">${Object.keys(studentPalette).filter(x=>x!=='slate').map(c=>`<button type="button" class="color-option ${(s?.color||'blue')===c?'chosen':''}" data-color="${c}" style="background:${studentPalette[c][0]}" title="${c}" aria-label="Choose ${c}"></button>`).join('')}</div><input type="hidden" id="f-color" value="${esc(s?.color||'blue')}" /></div>${s?`<div class="field full"><label class="toggle-row"><input type="checkbox" id="f-active" ${s.active?'checked':''} /> Active student (untick to archive)</label><span class="field-hint">Archived students remain visible in old lessons and reports.</span></div>`:''}</div></form>`;modalFrame(s?'Edit student':'Add student',s?'Keep student details up to date.':'Make space for another learner.',body,`<span></span><div style="display:flex;gap:9px"><button class="btn" data-action="close-modal">Cancel</button><button type="submit" form="student-form" class="btn primary">${s?'Save student':'Add student'}</button></div>`);document.querySelectorAll('[data-color]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-color]').forEach(el=>el.classList.remove('chosen'));btn.classList.add('chosen');$('#f-color').value=btn.dataset.color;}));$('#student-form').addEventListener('submit',e=>{e.preventDefault();let name=$('#f-name').value.trim(),color=$('#f-color').value,active=s?$('#f-active').checked:true;if(!name){alert('Please enter a name.');return;}if(s){Object.assign(s,{name,color,active});}else{db.students.push({id:'s_'+makeId(),name,color,active});}closeModal();persist();toast(s?'Student updated':'Student added');});}
-  function applyScreenshotSnapshot(){
-    if(!confirm('Replace lessons dated 1–31 October 2026 with the latest screenshot records? Your other months and student settings will stay as they are. Export a backup first if you made custom October changes.'))return;
-    const removeIds=new Set(screenshotLessons().map(l=>l.id));
-    db.lessons=db.lessons.filter(l=>!(l.date>='2026-10-01'&&l.date<='2026-10-31') && !removeIds.has(l.id));
-    db.lessons.push(...screenshotLessons());
-    persist();toast('October screenshot records restored');closeModal();
-  }
   function exportData(){let json=JSON.stringify({app:'Lesson Studio',exportedAt:new Date().toISOString(),...db},null,2);let blob=new Blob([json],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='lesson-studio-backup-'+iso(today)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2500);toast('Backup downloaded');}
   function validImport(data){return data&&Array.isArray(data.students)&&Array.isArray(data.lessons)&&Number.isFinite(Number(data.hourlyRate))&&Number(data.hourlyRate)>0&&data.students.every(s=>typeof s.id==='string'&&typeof s.name==='string')&&data.lessons.every(l=>typeof l.id==='string'&&typeof l.studentId==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(l.date)&&Number(l.hours)>0&&Number(l.hours)<=24);}
   function importData(event){let file=event.target.files[0];event.target.value='';if(!file)return;if(file.size>5*1024*1024){alert('That backup file is too large.');return;}let reader=new FileReader();reader.onload=()=>{try{
     let data=JSON.parse(reader.result);if(!validImport(data))throw Error('Invalid backup structure');
-    if(!confirm('Import this backup? It will replace the current lessons, students, and weekly timetable in this browser.'))return;
+    if(!confirm('Import this backup? It will replace the current lessons, students, and weekly timetable in your cloud account.'))return;
     db={version:Number(data.version)||2,hourlyRate:Number(data.hourlyRate),students:data.students.map(s=>({id:String(s.id),name:String(s.name).slice(0,80),color:studentPalette[s.color]?s.color:'blue',active:s.active!==false})),lessons:data.lessons.map(l=>({id:String(l.id),studentId:String(l.studentId),date:l.date,time:typeof l.time==='string'?l.time:'',hours:Number(l.hours),completed:l.completed===true,notes:typeof l.notes==='string'?l.notes.slice(0,2000):'',ruleId:typeof l.ruleId==='string'?l.ruleId:undefined,originalDate:typeof l.originalDate==='string'?l.originalDate:undefined,deleted:l.deleted===true,displayWeekStart:typeof l.displayWeekStart==='string'?l.displayWeekStart:null})),recurringRules:Array.isArray(data.recurringRules)?data.recurringRules.map(r=>({id:String(r.id),studentId:String(r.studentId),weekday:Number(r.weekday),time:String(r.time||''),hours:Number(r.hours)||1,startDate:String(r.startDate||SERIES_START),endDate:r.endDate,active:r.active!==false})):undefined,weekMonthOverrides:Object.fromEntries(Object.entries(data.weekMonthOverrides||{}).filter(([start,owner])=>/^\d{4}-\d{2}-\d{2}$/.test(start)&&/^\d{4}-\d{2}$/.test(owner)&&weekStart(start)===start&&[monthKey(dateAt(start)),monthKey(dateAt(addDays(start,6)))].includes(owner)))};
     migrateData();persist();toast('Backup imported successfully');
   }catch(err){alert('Could not import this file. Please select a valid Lesson Studio JSON backup.');console.error(err);}};reader.readAsText(file);}
   document.addEventListener('click',e=>{
     let nav=e.target.closest('[data-nav]');if(nav){goto(nav.dataset.nav);return;}
     let change=e.target.closest('[data-month]');if(change){selectedMonth=monthDate(selectedMonth.getFullYear(),selectedMonth.getMonth()+Number(change.dataset.month));render();return;}
-    let act=e.target.closest('[data-action]');if(act){switch(act.dataset.action){case'add-lesson':openLesson();break;case'add-student':openStudent();break;case'close-modal':closeModal();break;case'go-lessons':goto('lessons');break;case'export':exportData();break;case'load-snapshot':applyScreenshotSnapshot();break;case'import':$('#import-file').click();break;case'open-settings':openSettings();break;case'manage-month-weeks':openWeekMonthManager();break;case'add-rule':openRule();break;}return;}
+    let act=e.target.closest('[data-action]');if(act){switch(act.dataset.action){case'add-lesson':openLesson();break;case'add-student':openStudent();break;case'close-modal':closeModal();break;case'go-lessons':goto('lessons');break;case'export':exportData();break;case'import':$('#import-file').click();break;case'open-settings':openSettings();break;case'manage-month-weeks':openWeekMonthManager();break;case'add-rule':openRule();break;}return;}
     let manageWeek=e.target.closest('[data-manage-week]');if(manageWeek){openWeekMonthManager(manageWeek.dataset.manageWeek);return;}
     let assigned=e.target.closest('[data-assign-week]');if(assigned){setWeekOwner(assigned.dataset.assignWeek,assigned.dataset.ownerMonth);return;}
     let pin=e.target.closest('[data-pin-week]');if(pin){const id=pin.dataset.pinId,week=pin.dataset.pinWeek;closeModal();placeInWeek(id,week);return;}
@@ -645,7 +563,49 @@ body.dragging-lesson{user-select:none!important;cursor:grabbing!important}
   document.addEventListener('submit',e=>{if(e.target.id==='rate-form'){e.preventDefault();let r=Number($('#hourly-rate').value);if(r<=0||r>10000||!Number.isFinite(r))return;db.hourlyRate=r;persist();toast('Hourly rate updated');}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalKind)closeModal();});
   $('#import-file').addEventListener('change',importData);
-  render();
+  const cloud = window.supabase?.createClient('https://loksrhvzpsyfviuqbqob.supabase.co','sb_publishable_nMhif0pEJ0GU2jqlg-xcpw_IeCgzP0R');
+  let account=null, revision=null, dirty=false, saving=false, loading=false, conflict=false;
+  const status = msg => {$('#cloud-status').textContent=msg;};
+  function showRetry(show){$('#cloud-retry').hidden=!show;}
+  async function saveCloud(){
+    if(!account||saving||!dirty||conflict)return;
+    saving=true; showRetry(false); status('Saving…');
+    try {
+      while(dirty){
+        dirty=false;const snapshot=JSON.parse(JSON.stringify(db));const stamp=new Date().toISOString();
+        let result;
+        if(revision===null){result=await cloud.from('lesson_studio_data').insert({user_id:account.id,data:snapshot,updated_at:stamp}).select('updated_at').single();}
+        else {result=await cloud.from('lesson_studio_data').update({data:snapshot,updated_at:stamp}).eq('user_id',account.id).eq('updated_at',revision).select('updated_at').maybeSingle();}
+        if(result.error){if(result.error.code==='23505')conflict=true;throw result.error;}
+        if(!result.data){conflict=true;throw Error('Another device saved newer changes.');}
+        revision=result.data.updated_at;
+      }
+      status('Saved to cloud');
+    } catch(err){dirty=true;status(conflict?'Sync conflict — export a backup before reloading.':'Not saved — check connection and retry.');showRetry(!conflict);console.error(err);}
+    finally{saving=false;}
+  }
+  async function refreshCloud(initial=false){
+    if(!account||dirty||saving||loading||(!initial&&(modalKind||document.body.classList.contains('dragging-lesson')||document.activeElement?.matches('input,textarea,select'))))return;
+    loading=true;
+    try{
+      const result=await cloud.from('lesson_studio_data').select('data,updated_at').eq('user_id',account.id).maybeSingle();
+      if(result.error)throw result.error;
+      if(dirty||saving)return;
+      if(result.data){if(!validImport(result.data.data))throw Error('Invalid cloud data');if(initial||revision!==result.data.updated_at){db=result.data.data;migrateData();revision=result.data.updated_at;render();}}
+      else if(initial){db=defaults();revision=null;render();}
+      status(revision?'Saved to cloud':'New account — import your backup or add students');
+    }catch(err){status('Could not load cloud data');if(initial)throw err;}
+    finally{loading=false;}
+  }
+  async function enter(user){account=user;await refreshCloud(true);$('#login-screen').hidden=true;$('#workspace').hidden=false;$('#cloud-bar').hidden=false;}
+  $('#cloud-login').addEventListener('submit',async e=>{e.preventDefault();const btn=e.target.querySelector('button');btn.disabled=true;$('#login-msg').textContent='Signing in…';try{if(!cloud)throw Error('Could not load Supabase. Check your internet connection.');const {data,error}=await cloud.auth.signInWithPassword({email:$('#cloud-email').value,password:$('#cloud-password').value});if(error)throw error;await enter(data.user);$('#cloud-password').value='';$('#login-msg').textContent='';}catch(err){account=null;$('#login-msg').textContent=err.message||'Could not sign in';}finally{btn.disabled=false;}});
+  $('#cloud-retry').onclick=()=>saveCloud();
+  $('#cloud-logout').onclick=async()=>{if(dirty||saving){alert('Your changes are not saved. Retry or export a backup before signing out.');return;}const {error}=await cloud.auth.signOut();if(error){status('Sign out failed');return;}location.reload();};
+  window.addEventListener('beforeunload',e=>{if(dirty||saving){e.preventDefault();e.returnValue='';}});
+  window.addEventListener('focus',()=>refreshCloud());
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCloud();});
+  setInterval(()=>refreshCloud(),10000);
+  (async()=>{try{if(!cloud)throw Error('Could not load Supabase. Check your internet connection.');const {data,error}=await cloud.auth.getSession();if(error)throw error;if(data.session)await enter(data.session.user);}catch(err){account=null;$('#login-msg').textContent=err.message||'Could not connect';}})();
 })();
 </script>
 </body>
